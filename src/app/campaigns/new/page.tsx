@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { useRouter } from 'next/navigation'
 import { 
   ArrowLeft, Save, Calendar, Users, Mic, 
   CheckCircle, Clock, Target, FileText, Volume2,
@@ -12,7 +13,9 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
 import { AdvancedNavigation } from '@/components/advanced-navigation'
+import { useCampaigns } from '@/hooks/use-campaigns'
 import { isDemoMode } from '@/lib/demo-data'
+import { toast } from 'sonner'
 import Link from 'next/link'
 
 import { VoiceRecorder } from '@/components/voice-recorder'
@@ -39,6 +42,9 @@ interface CampaignFormData {
 }
 
 export default function NewCampaignPage() {
+  const router = useRouter()
+  const { createCampaign } = useCampaigns()
+  
   const [formData, setFormData] = useState<CampaignFormData>({
     name: '',
     voicemailScript: '',
@@ -98,14 +104,39 @@ export default function NewCampaignPage() {
   const handleSubmit = async (action: 'save' | 'launch') => {
     setIsSubmitting(true)
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000))
+      // Validate required fields
+      if (!formData.name.trim()) {
+        toast.error('Campaign name is required')
+        return
+      }
       
-      // In a real app, you would handle the response and redirect
-      console.log('Campaign data:', { ...formData, action })
+      if (!formData.voicemailScript.trim()) {
+        toast.error('Voicemail script is required')
+        return
+      }
+      
+      // Create campaign data
+      const campaignData = {
+        name: formData.name,
+        script: formData.voicemailScript,
+        voice_id: `professional_${formData.voiceSettings.voice}`,
+        delivery_time_start: formData.scheduledTime || '10:00',
+        delivery_time_end: '18:00',
+        time_zone: 'America/New_York'
+      }
+      
+      // Create the campaign
+      await createCampaign(campaignData)
+      
+      // Show success message
+      toast.success(`Campaign "${formData.name}" ${action === 'save' ? 'saved' : 'launched'} successfully!`)
+      
+      // Navigate back to campaigns list
+      router.push('/campaigns')
       
     } catch (error) {
       console.error('Error submitting campaign:', error)
+      toast.error(error instanceof Error ? error.message : 'Failed to create campaign')
     } finally {
       setIsSubmitting(false)
     }
