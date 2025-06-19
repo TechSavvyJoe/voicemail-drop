@@ -135,6 +135,356 @@ export default function CampaignsPage() {
     )
   }
 
+  const toggleCampaignSelection = (campaignId: string) => {
+    setSelectedCampaigns(prev => 
+      prev.includes(campaignId) 
+        ? prev.filter(id => id !== campaignId)
+        : [...prev, campaignId]
+    )
+  }
+
+  const totalStats = {
+    total: campaigns.length,
+    running: campaigns.filter(c => c.status === 'running').length,
+    completed: campaigns.filter(c => c.status === 'completed').length,
+    draft: campaigns.filter(c => c.status === 'draft').length
+  }
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+      <AdvancedNavigation />
+      
+      <div className="container mx-auto px-4 py-8 max-w-7xl">
+        {/* Clean Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="mb-8"
+        >
+          <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 rounded-2xl p-6 shadow-lg">
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+              <div>
+                <h1 className="text-3xl font-bold text-slate-900 dark:text-white">Voice Campaigns</h1>
+                <p className="text-slate-600 dark:text-slate-400 mt-1">Manage your automated voicemail campaigns</p>
+              </div>
+              <div className="flex items-center gap-3">
+                <Button variant="outline" className="h-10">
+                  <Download className="w-4 h-4 mr-2" />
+                  Export
+                </Button>
+                <Link href="/campaigns/new">
+                  <Button className="h-10">
+                    <Plus className="w-4 h-4 mr-2" />
+                    New Campaign
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Simple Stats Cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="grid gap-4 mb-8 grid-cols-2 lg:grid-cols-4"
+        >
+          <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50">
+            <CardContent className="p-4">
+              <div className="text-2xl font-bold text-slate-900 dark:text-white">{totalStats.total}</div>
+              <div className="text-sm text-slate-600 dark:text-slate-400">Total</div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border border-emerald-200/50 dark:border-emerald-700/50">
+            <CardContent className="p-4">
+              <div className="text-2xl font-bold text-emerald-700 dark:text-emerald-400">{totalStats.running}</div>
+              <div className="text-sm text-emerald-600 dark:text-emerald-400">Running</div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border border-blue-200/50 dark:border-blue-700/50">
+            <CardContent className="p-4">
+              <div className="text-2xl font-bold text-blue-700 dark:text-blue-400">{totalStats.completed}</div>
+              <div className="text-sm text-blue-600 dark:text-blue-400">Completed</div>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50">
+            <CardContent className="p-4">
+              <div className="text-2xl font-bold text-slate-700 dark:text-slate-400">{totalStats.draft}</div>
+              <div className="text-sm text-slate-600 dark:text-slate-400">Draft</div>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        {/* Clean Search & Filter */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2 }}
+          className="mb-6"
+        >
+          <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50">
+            <CardContent className="p-4">
+              <div className="flex flex-col lg:flex-row gap-4">
+                <div className="relative flex-1">
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400 h-4 w-4" />
+                  <Input
+                    placeholder="Search campaigns..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="pl-10 bg-white/50 dark:bg-slate-700/50 border-slate-200/50 dark:border-slate-600/50"
+                  />
+                </div>
+                <div className="flex gap-3">
+                  <select
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                    className="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-white/50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-300"
+                  >
+                    <option value="all">All Status</option>
+                    <option value="running">Running</option>
+                    <option value="completed">Completed</option>
+                    <option value="draft">Draft</option>
+                  </select>
+                  <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    className="px-3 py-2 rounded-lg border border-slate-200 dark:border-slate-600 bg-white/50 dark:bg-slate-700/50 text-slate-700 dark:text-slate-300"
+                  >
+                    <option value="created">Date Created</option>
+                    <option value="name">Name</option>
+                    <option value="recipients">Recipients</option>
+                    <option value="progress">Progress</option>
+                  </select>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </motion.div>
+
+        {/* Simplified Campaign Cards */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3"
+        >
+          {filteredAndSortedCampaigns.map((campaign, index) => (
+            <motion.div
+              key={campaign.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.05 }}
+            >
+              <Card className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border border-slate-200/50 dark:border-slate-700/50 hover:shadow-lg transition-all duration-300">
+                <CardContent className="p-6">
+                  {/* Header */}
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex-1">
+                      <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2 line-clamp-2">
+                        {campaign.name}
+                      </h3>
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm text-slate-500 dark:text-slate-400">
+                          {new Date(campaign.created_at).toLocaleDateString()}
+                        </span>
+                        {getStatusBadge(campaign.status)}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Stats Grid */}
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="bg-slate-50 dark:bg-slate-700/50 rounded-lg p-3">
+                      <div className="text-lg font-bold text-slate-900 dark:text-white">
+                        {campaign.total_recipients.toLocaleString()}
+                      </div>
+                      <div className="text-xs text-slate-600 dark:text-slate-400">Recipients</div>
+                    </div>
+                    
+                    <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-3">
+                      <div className="text-lg font-bold text-blue-700 dark:text-blue-400">
+                        {campaign.sent_count.toLocaleString()}
+                      </div>
+                      <div className="text-xs text-blue-600 dark:text-blue-400">Sent</div>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-4 mb-4">
+                    <div className="bg-emerald-50 dark:bg-emerald-900/20 rounded-lg p-3">
+                      <div className="text-lg font-bold text-emerald-700 dark:text-emerald-400">
+                        {campaign.delivered_count.toLocaleString()}
+                      </div>
+                      <div className="text-xs text-emerald-600 dark:text-emerald-400">Delivered</div>
+                    </div>
+                    
+                    <div className="bg-purple-50 dark:bg-purple-900/20 rounded-lg p-3">
+                      <div className="text-lg font-bold text-purple-700 dark:text-purple-400">
+                        {campaign.total_recipients > 0 ? Math.round((campaign.sent_count / campaign.total_recipients) * 100) : 0}%
+                      </div>
+                      <div className="text-xs text-purple-600 dark:text-purple-400">Progress</div>
+                    </div>
+                  </div>
+
+                  {/* Progress Bar */}
+                  <div className="mb-4">
+                    <div className="flex justify-between text-sm mb-2">
+                      <span className="text-slate-600 dark:text-slate-400">Progress</span>
+                      <span className="text-slate-900 dark:text-white font-medium">
+                        {campaign.sent_count} / {campaign.total_recipients}
+                      </span>
+                    </div>
+                    <div className="w-full bg-slate-200 dark:bg-slate-700 rounded-full h-2">
+                      <div
+                        className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300"
+                        style={{
+                          width: `${campaign.total_recipients > 0 ? (campaign.sent_count / campaign.total_recipients) * 100 : 0}%`
+                        }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Actions */}
+                  <div className="flex items-center gap-2">
+                    <Link href={`/campaigns/${campaign.id}`} className="flex-1">
+                      <Button variant="outline" size="sm" className="w-full">
+                        <Eye className="w-4 h-4 mr-2" />
+                        View
+                      </Button>
+                    </Link>
+                    <Link href={`/campaigns/${campaign.id}/edit`}>
+                      <Button variant="outline" size="sm">
+                        <Edit className="w-4 h-4" />
+                      </Button>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+          ))}
+        </motion.div>
+
+        {/* Empty State */}
+        {filteredAndSortedCampaigns.length === 0 && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-12"
+          >
+            <Phone className="w-16 h-16 text-slate-400 mx-auto mb-4" />
+            <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
+              No campaigns found
+            </h3>
+            <p className="text-slate-600 dark:text-slate-400 mb-6">
+              {searchTerm || statusFilter !== 'all' 
+                ? 'Try adjusting your search or filters'
+                : 'Create your first campaign to get started'
+              }
+            </p>
+            {!searchTerm && statusFilter === 'all' && (
+              <Link href="/campaigns/new">
+                <Button>
+                  <Plus className="w-4 h-4 mr-2" />
+                  Create Your First Campaign
+                </Button>
+              </Link>
+            )}
+          </motion.div>
+        )}
+      </div>
+    </div>
+  )
+}
+        default:
+          compareValue = 0
+      }
+      
+      return sortOrder === 'asc' ? compareValue : -compareValue
+    })
+  }, [campaigns, searchTerm, statusFilter, sortBy, sortOrder])
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+        <AdvancedNavigation />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
+          <div className="flex items-center justify-center min-h-[400px]">
+            <div className="flex items-center gap-3 text-slate-600 dark:text-slate-400">
+              <Loader2 className="h-6 w-6 animate-spin" />
+              <span>Loading campaigns...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Show error state
+  if (isError) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+        <AdvancedNavigation />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
+          <div className="flex items-center justify-center min-h-[400px]">
+            <div className="text-center">
+              <div className="text-red-500 dark:text-red-400 mb-2">
+                Error loading campaigns
+              </div>
+              <div className="text-sm text-slate-600 dark:text-slate-400">
+                {error?.message || 'Something went wrong'}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  const getStatusConfig = (status: string) => {
+    const configs = {
+      running: { 
+        variant: 'default' as const, 
+        label: 'Running', 
+        icon: Play, 
+        className: 'bg-emerald-100 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800',
+        dotColor: 'bg-emerald-500'
+      },
+      completed: { 
+        variant: 'secondary' as const, 
+        label: 'Completed', 
+        icon: Check, 
+        className: 'bg-blue-100 text-blue-700 border-blue-200 dark:bg-blue-900/30 dark:text-blue-400 dark:border-blue-800',
+        dotColor: 'bg-blue-500'
+      },
+      draft: { 
+        variant: 'outline' as const, 
+        label: 'Draft', 
+        icon: Clock, 
+        className: 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700',
+        dotColor: 'bg-slate-400'
+      }
+    }
+    
+    return configs[status as keyof typeof configs] || configs.draft
+  }
+
+  const getStatusBadge = (status: string) => {
+    const config = getStatusConfig(status)
+    const Icon = config.icon
+    
+    return (
+      <div className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium border ${config.className}`}>
+        <div className={`w-2 h-2 rounded-full ${config.dotColor}`} />
+        <Icon className="h-3 w-3" />
+        {config.label}
+      </div>
+    )
+  }
+
   const getPerformanceColor = (rate: number) => {
     if (rate >= 80) return 'text-emerald-600 dark:text-emerald-400'
     if (rate >= 60) return 'text-amber-600 dark:text-amber-400'

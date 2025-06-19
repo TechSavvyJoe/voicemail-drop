@@ -44,7 +44,7 @@ const faqData: FAQItem[] = [
   },
   {
     question: "How can I track campaign performance?",
-    answer: "Visit the Analytics page to see detailed metrics including delivery rates, response rates, optimal timing, and regional performance data.",
+    answer: "Visit the Analytics page to see detailed metrics including delivery rates, optimal timing, and regional performance data.",
     category: "Analytics"
   },
   {

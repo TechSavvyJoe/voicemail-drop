@@ -279,9 +279,9 @@ export const demoAnalytics = {
     ]
   },
   campaignPerformance: [
-    { name: 'Holiday Sale Follow-up', sent: 150, delivered: 125, responded: 125 },
-    { name: 'Service Reminder Campaign', sent: 89, delivered: 82, responded: 82 },
-    { name: 'New Vehicle Promotion', sent: 0, delivered: 0, responded: 0 },
+    { name: 'Holiday Sale Follow-up', sent: 150, delivered: 125 },
+    { name: 'Service Reminder Campaign', sent: 89, delivered: 82 },
+    { name: 'New Vehicle Promotion', sent: 0, delivered: 0 },
   ],
   monthlyStats: [
     { month: 'Nov 2024', voicemails: 892, success: 678, rate: 76.0 },
@@ -310,12 +310,12 @@ export const demoAnalytics = {
     { hour: '17:00', deliveries: 54 }
   ],
   monthlyTrends: [
-    { month: 'Nov 2024', campaigns: 8, delivered: 892, responseRate: 76.0 },
-    { month: 'Oct 2024', campaigns: 7, delivered: 1024, responseRate: 77.1 },
-    { month: 'Sep 2024', campaigns: 6, delivered: 956, responseRate: 76.8 },
-    { month: 'Aug 2024', campaigns: 9, delivered: 1143, responseRate: 75.9 },
-    { month: 'Jul 2024', campaigns: 8, delivered: 1089, responseRate: 78.6 },
-    { month: 'Jun 2024', campaigns: 5, delivered: 967, responseRate: 76.7 }
+    { month: 'Nov 2024', campaigns: 8, delivered: 892, successRate: 92.3 },
+    { month: 'Oct 2024', campaigns: 7, delivered: 1024, successRate: 94.1 },
+    { month: 'Sep 2024', campaigns: 6, delivered: 956, successRate: 91.8 },
+    { month: 'Aug 2024', campaigns: 9, delivered: 1143, successRate: 93.9 },
+    { month: 'Jul 2024', campaigns: 8, delivered: 1089, successRate: 95.6 },
+    { month: 'Jun 2024', campaigns: 5, delivered: 967, successRate: 92.7 }
   ],
 }
 

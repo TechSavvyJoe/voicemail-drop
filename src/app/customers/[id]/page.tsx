@@ -374,7 +374,7 @@ export default function CustomerDetailPage() {
                   className="flex justify-between items-center p-6 bg-gradient-to-br from-green-50/80 to-green-100/60 rounded-2xl border border-white/50"
                 >
                   <div>
-                    <p className="text-sm font-bold text-green-800 uppercase tracking-wide">Response Rate</p>
+                    <p className="text-sm font-bold text-green-800 uppercase tracking-wide">Delivery Success</p>
                     <p className="text-3xl font-black text-green-900">25%</p>
                   </div>
                   <div className="p-3 bg-green-100/80 rounded-xl">

@@ -13,7 +13,6 @@ interface Campaign {
   total_recipients: number
   sent_count: number
   delivered_count: number
-  success_count: number
   script: string
   estimated_completion: string
   created_at: string
@@ -64,7 +63,6 @@ async function fetchCampaigns(): Promise<Campaign[]> {
       total_recipients: campaign.totalRecipients,
       sent_count: campaign.sentCount,
       delivered_count: campaign.deliveredCount,
-      success_count: campaign.successCount,
       script: campaign.script,
       estimated_completion: campaign.estimatedCompletion,
       created_at: campaign.createdAt,
@@ -106,7 +104,6 @@ async function createCampaign(campaignData: CreateCampaignData): Promise<Campaig
       total_recipients: campaignData.total_recipients || 0,
       sent_count: 0,
       delivered_count: 0,
-      success_count: 0,
       script: campaignData.script,
       estimated_completion: 'Not started',
       created_at: new Date().toISOString(),
@@ -150,7 +147,6 @@ async function updateCampaign(updateData: UpdateCampaignData): Promise<Campaign>
       total_recipients: updateData.total_recipients || 0,
       sent_count: 0,
       delivered_count: 0,
-      success_count: 0,
       script: updateData.script || 'Updated script',
       estimated_completion: 'Not started',
       created_at: new Date().toISOString(),

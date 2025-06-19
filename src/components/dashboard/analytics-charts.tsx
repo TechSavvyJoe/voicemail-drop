@@ -29,10 +29,9 @@ import {
 
 interface Analytics {
   campaignPerformance: Array<{
-    name: string
-    sent: number
-    delivered: number
-    responded: number
+  name: string
+  sent: number
+  delivered: number
   }>
   deliveryByTimeOfDay: Array<{
     hour: string
@@ -42,7 +41,7 @@ interface Analytics {
     month: string
     campaigns: number
     delivered: number
-    responseRate: number
+    successRate: number
   }>
 }
 
@@ -125,7 +124,7 @@ export function AnalyticsCharts({ data, isLoading, onRefresh }: AnalyticsChartsP
                     <span>Campaign Performance</span>
                   </CardTitle>
                   <CardDescription>
-                    Compare sent, delivered, and response rates across campaigns
+                    Compare sent and delivered rates across campaigns
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -153,14 +152,13 @@ export function AnalyticsCharts({ data, isLoading, onRefresh }: AnalyticsChartsP
                       />
                       <Bar dataKey="sent" fill="#3B82F6" name="Sent" radius={[2, 2, 0, 0]} />
                       <Bar dataKey="delivered" fill="#10B981" name="Delivered" radius={[2, 2, 0, 0]} />
-                      <Bar dataKey="responded" fill="#F59E0B" name="Responded" radius={[2, 2, 0, 0]} />
                     </BarChart>
                   </ResponsiveContainer>
                 </CardContent>
               </Card>
             </motion.div>
 
-            {/* Response Rate Pie Chart */}
+            {/* Delivery Success Chart */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -170,10 +168,10 @@ export function AnalyticsCharts({ data, isLoading, onRefresh }: AnalyticsChartsP
                 <CardHeader>
                   <CardTitle className="flex items-center space-x-2">
                     <PieChartIcon className="h-5 w-5" />
-                    <span>Response Distribution</span>
+                    <span>Delivery Success Rate</span>
                   </CardTitle>
                   <CardDescription>
-                    Breakdown of campaign responses
+                    Breakdown of voicemail delivery success
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -184,7 +182,7 @@ export function AnalyticsCharts({ data, isLoading, onRefresh }: AnalyticsChartsP
                         cx="50%"
                         cy="50%"
                         outerRadius={80}
-                        dataKey="responded"
+                        dataKey="delivered"
                         nameKey="name"
                       >
                         {data.campaignPerformance.map((entry, index) => (
@@ -266,11 +264,11 @@ export function AnalyticsCharts({ data, isLoading, onRefresh }: AnalyticsChartsP
                     />
                     <Line
                       type="monotone"
-                      dataKey="responseRate"
+                      dataKey="successRate"
                       stroke="#10B981"
                       strokeWidth={3}
                       dot={{ fill: '#10B981', strokeWidth: 2, r: 4 }}
-                      name="Response Rate %"
+                      name="Success Rate %"
                     />
                   </AreaChart>
                 </ResponsiveContainer>

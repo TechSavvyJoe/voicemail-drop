@@ -28,10 +28,9 @@ interface Campaign {
 
 interface Analytics {
   campaignPerformance: Array<{
-    name: string
-    sent: number
-    delivered: number
-    responded: number
+  name: string
+  sent: number
+  delivered: number
   }>
   deliveryByTimeOfDay: Array<{
     hour: string
@@ -41,7 +40,7 @@ interface Analytics {
     month: string
     campaigns: number
     delivered: number
-    responseRate: number
+    successRate: number
   }>
 }
 
