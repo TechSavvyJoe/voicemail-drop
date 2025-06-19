@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
+    "build:github": "NODE_ENV=production next build",
+    "deploy:github": "npm run build:github && cp -r out/* docs/ && touch docs/.nojekyll",
     "start": "next start",
     "lint": "next lint"
   },

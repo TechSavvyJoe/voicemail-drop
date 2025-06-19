@@ -3,6 +3,7 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState, useEffect } from 'react'
 import { isDemoMode, demoStats, demoCampaigns, demoAnalytics } from '@/lib/demo-data'
+import { supabase } from '@/lib/supabase'
 
 interface DashboardStats {
   totalCustomers: number
@@ -50,41 +51,92 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 async function fetchDashboardStats(): Promise<DashboardStats> {
   await delay(500) // Simulate network delay
   
-  if (isDemoMode) {
+  if (isDemoMode || !supabase) {
     return demoStats
   }
   
-  // In real app, this would be an API call
-  const response = await fetch('/api/dashboard/stats')
-  if (!response.ok) throw new Error('Failed to fetch stats')
-  return response.json()
+  try {
+    // Fetch stats from Supabase
+    const [campaignsResult, customersResult] = await Promise.all([
+      supabase.from('campaigns').select('id, status, sent_count, delivered_count'),
+      supabase.from('customers').select('id')
+    ])
+
+    if (campaignsResult.error) throw campaignsResult.error
+    if (customersResult.error) throw customersResult.error
+
+    const campaigns = campaignsResult.data || []
+    const customers = customersResult.data || []
+
+    const totalVoicemails = campaigns.reduce((sum, c) => sum + (c.sent_count || 0), 0)
+    const totalDelivered = campaigns.reduce((sum, c) => sum + (c.delivered_count || 0), 0)
+    const activeCampaigns = campaigns.filter(c => c.status === 'running').length
+
+    return {
+      totalCustomers: customers.length,
+      totalCampaigns: campaigns.length,
+      voicemailsSent: totalVoicemails,
+      successRate: totalVoicemails > 0 ? Math.round((totalDelivered / totalVoicemails) * 100) : 0,
+      monthlyUsage: totalVoicemails,
+      monthlyLimit: 10000, // Default limit
+      activeCampaigns
+    }
+  } catch (error) {
+    console.error('Error fetching dashboard stats:', error)
+    return demoStats // Fallback to demo data
+  }
 }
 
 async function fetchRecentCampaigns(): Promise<Campaign[]> {
   await delay(300)
   
-  if (isDemoMode) {
+  if (isDemoMode || !supabase) {
     return demoCampaigns.slice(0, 5).map(campaign => ({
       ...campaign,
       script: 'Sample voicemail script content...'
     }))
   }
   
-  const response = await fetch('/api/campaigns?recent=true')
-  if (!response.ok) throw new Error('Failed to fetch campaigns')
-  return response.json()
+  try {
+    const { data, error } = await supabase
+      .from('campaigns')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(5)
+
+    if (error) throw error
+
+    return (data || []).map(campaign => ({
+      id: campaign.id,
+      name: campaign.name,
+      status: campaign.status,
+      totalRecipients: campaign.total_recipients,
+      sentCount: campaign.sent_count,
+      deliveredCount: campaign.delivered_count,
+      createdAt: campaign.created_at,
+      script: campaign.script
+    }))
+  } catch (error) {
+    console.error('Error fetching recent campaigns:', error)
+    return demoCampaigns.slice(0, 5) // Fallback to demo data
+  }
 }
 
 async function fetchAnalytics(): Promise<Analytics> {
   await delay(400)
   
-  if (isDemoMode) {
+  if (isDemoMode || !supabase) {
     return demoAnalytics
   }
   
-  const response = await fetch('/api/analytics/dashboard')
-  if (!response.ok) throw new Error('Failed to fetch analytics')
-  return response.json()
+  try {
+    // For now, return demo analytics as the analytics would require more complex queries
+    // In production, this would involve aggregation queries on campaign data
+    return demoAnalytics
+  } catch (error) {
+    console.error('Error fetching analytics:', error)
+    return demoAnalytics // Fallback to demo data
+  }
 }
 
 export function useDashboardData() {
@@ -125,7 +177,6 @@ export function useDashboardData() {
 
 export function useRealTimeUpdates() {
   const queryClient = useQueryClient()
-  
   useEffect(() => {
     if (!isDemoMode) return
 

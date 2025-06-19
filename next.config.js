@@ -1,8 +1,21 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Enable static exports for GitHub Pages
+  output: 'export',
+  trailingSlash: true,
+  skipTrailingSlashRedirect: true,
+  
+  // Configure for GitHub Pages deployment
+  basePath: process.env.NODE_ENV === 'production' ? '/voicemail-drop' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' ? '/voicemail-drop/' : '',
+  
+  // Optimize images for static export
   images: {
+    unoptimized: true,
     domains: ['localhost', 'your-domain.com'],
   },
+  
+  // Environment variables
   env: {
     SUPABASE_URL: process.env.SUPABASE_URL,
     SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
@@ -15,11 +28,6 @@ const nextConfig = {
     TWILIO_ACCOUNT_SID: process.env.TWILIO_ACCOUNT_SID,
     TWILIO_AUTH_TOKEN: process.env.TWILIO_AUTH_TOKEN,
     TWILIO_PHONE_NUMBER: process.env.TWILIO_PHONE_NUMBER,
-  },
-  experimental: {
-    serverActions: {
-      bodySizeLimit: '2mb',
-    },
   },
 }
 

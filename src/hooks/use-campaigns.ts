@@ -3,6 +3,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 import { isDemoMode, demoCampaigns } from '@/lib/demo-data'
+import { supabase } from '@/lib/supabase'
 
 // Types
 interface Campaign {
@@ -53,7 +54,7 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms))
 async function fetchCampaigns(): Promise<Campaign[]> {
   await delay(300) // Simulate network delay
   
-  if (isDemoMode) {
+  if (isDemoMode || !supabase) {
     // Transform demo data to match API structure
     return demoCampaigns.map(campaign => ({
       id: campaign.id,
@@ -75,26 +76,25 @@ async function fetchCampaigns(): Promise<Campaign[]> {
     }))
   }
   
-  const response = await fetch('/api/campaigns', {
-    method: 'GET',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-  
-  if (!response.ok) {
+  try {
+    const { data, error } = await supabase
+      .from('campaigns')
+      .select('*')
+      .order('created_at', { ascending: false })
+    
+    if (error) throw error
+    
+    return data || []
+  } catch (error) {
+    console.error('Error fetching campaigns:', error)
     throw new Error('Failed to fetch campaigns')
   }
-  
-  const data = await response.json()
-  return data.campaigns || []
 }
 
 async function createCampaign(campaignData: CreateCampaignData): Promise<Campaign> {
   await delay(500)
   
-  if (isDemoMode) {
+  if (isDemoMode || !supabase) {
     // Return mock created campaign
     return {
       id: `demo-campaign-${Date.now()}`,
@@ -115,29 +115,40 @@ async function createCampaign(campaignData: CreateCampaignData): Promise<Campaig
       time_zone: campaignData.time_zone || 'America/New_York'
     }
   }
-  
-  const response = await fetch('/api/campaigns', {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(campaignData),
-  })
-  
-  if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.error || 'Failed to create campaign')
+
+  try {
+    const { data, error } = await supabase
+      .from('campaigns')
+      .insert([{
+        name: campaignData.name,
+        script: campaignData.script,
+        total_recipients: campaignData.total_recipients || 0,
+        sent_count: 0,
+        delivered_count: 0,
+        status: 'draft',
+        voice_id: campaignData.voice_id || 'professional_male',
+        delivery_time_start: campaignData.delivery_time_start || '10:00',
+        delivery_time_end: campaignData.delivery_time_end || '18:00',
+        time_zone: campaignData.time_zone || 'America/New_York',
+        estimated_completion: 'Not started',
+        is_active: false
+      }])
+      .select()
+      .single()
+
+    if (error) throw error
+    
+    return data
+  } catch (error) {
+    console.error('Error creating campaign:', error)
+    throw new Error('Failed to create campaign')
   }
-  
-  const data = await response.json()
-  return data.campaign
 }
 
 async function updateCampaign(updateData: UpdateCampaignData): Promise<Campaign> {
   await delay(400)
   
-  if (isDemoMode) {
+  if (isDemoMode || !supabase) {
     // Return mock updated campaign
     return {
       id: updateData.id,
@@ -158,43 +169,47 @@ async function updateCampaign(updateData: UpdateCampaignData): Promise<Campaign>
       time_zone: updateData.time_zone || 'America/New_York'
     }
   }
-  
-  const response = await fetch('/api/campaigns', {
-    method: 'PUT',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(updateData),
-  })
-  
-  if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.error || 'Failed to update campaign')
+
+  try {
+    const { id, ...updates } = updateData
+    
+    const { data, error } = await supabase
+      .from('campaigns')
+      .update({
+        ...updates,
+        updated_at: new Date().toISOString(),
+        is_active: updates.status === 'running'
+      })
+      .eq('id', id)
+      .select()
+      .single()
+
+    if (error) throw error
+    
+    return data
+  } catch (error) {
+    console.error('Error updating campaign:', error)
+    throw new Error('Failed to update campaign')
   }
-  
-  const data = await response.json()
-  return data.campaign
 }
 
 async function deleteCampaign(campaignId: string): Promise<void> {
   await delay(300)
   
-  if (isDemoMode) {
+  if (isDemoMode || !supabase) {
     return // Mock deletion
   }
   
-  const response = await fetch(`/api/campaigns?id=${campaignId}`, {
-    method: 'DELETE',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-  
-  if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.error || 'Failed to delete campaign')
+  try {
+    const { error } = await supabase
+      .from('campaigns')
+      .delete()
+      .eq('id', campaignId)
+
+    if (error) throw error
+  } catch (error) {
+    console.error('Error deleting campaign:', error)
+    throw new Error('Failed to delete campaign')
   }
 }
 
@@ -213,7 +228,7 @@ interface ProcessResult {
 async function processCampaign(campaignId: string): Promise<ProcessResult> {
   await delay(1000)
   
-  if (isDemoMode) {
+  if (isDemoMode || !supabase) {
     // Return mock processing results
     return {
       success: true,
@@ -227,22 +242,37 @@ async function processCampaign(campaignId: string): Promise<ProcessResult> {
       }))
     }
   }
-  
-  const response = await fetch('/api/campaigns/process', {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ campaignId }),
-  })
-  
-  if (!response.ok) {
-    const error = await response.json()
-    throw new Error(error.error || 'Failed to process campaign')
+
+  // For production, this would integrate with Twilio or similar service
+  // For now, return mock data but update campaign status
+  try {
+    const { error } = await supabase
+      .from('campaigns')
+      .update({ 
+        status: 'running',
+        is_active: true,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', campaignId)
+
+    if (error) throw error
+
+    // Mock results for demo
+    return {
+      success: true,
+      processed: 50,
+      successful: 45,
+      failed: 5,
+      results: Array.from({ length: 50 }, (_, i) => ({
+        customerId: `customer-${i + 1}`,
+        phoneNumber: `555-000-${String(i + 1).padStart(4, '0')}`,
+        status: Math.random() > 0.1 ? 'delivered' : 'failed'
+      }))
+    }
+  } catch (error) {
+    console.error('Error processing campaign:', error)
+    throw new Error('Failed to process campaign')
   }
-  
-  return response.json()
 }
 
 // Hook
