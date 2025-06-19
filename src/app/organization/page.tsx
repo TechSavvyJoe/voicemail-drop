@@ -108,7 +108,7 @@ export default function OrganizationPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-slate-100 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-slate-100">
       <AdvancedNavigation />
       
       <div className="container mx-auto px-6 py-8 max-w-6xl">
@@ -119,10 +119,10 @@ export default function OrganizationPage() {
         >
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
+              <h1 className="text-3xl font-bold text-slate-900 mb-2">
                 Organization Settings
               </h1>
-              <p className="text-slate-600 dark:text-slate-300">
+              <p className="text-slate-600">
                 Manage your organization details and team members
               </p>
             </div>
@@ -143,7 +143,7 @@ export default function OrganizationPage() {
             transition={{ delay: 0.1 }}
             className="lg:col-span-2"
           >
-            <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-slate-200 dark:border-slate-700">
+            <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
@@ -173,7 +173,7 @@ export default function OrganizationPage() {
                     value={orgData.name}
                     onChange={(e) => handleChange('name', e.target.value)}
                     disabled={!isEditing}
-                    className="bg-white dark:bg-slate-700"
+                    className="bg-white"
                   />
                 </div>
 
@@ -185,7 +185,7 @@ export default function OrganizationPage() {
                     onChange={(e) => handleChange('description', e.target.value)}
                     disabled={!isEditing}
                     rows={3}
-                    className="bg-white dark:bg-slate-700"
+                    className="bg-white"
                   />
                 </div>
 
@@ -197,7 +197,7 @@ export default function OrganizationPage() {
                       value={orgData.industry}
                       onChange={(e) => handleChange('industry', e.target.value)}
                       disabled={!isEditing}
-                      className="bg-white dark:bg-slate-700"
+                      className="bg-white"
                     />
                   </div>
                   <div className="space-y-2">
@@ -208,7 +208,7 @@ export default function OrganizationPage() {
                       onChange={(e) => handleChange('size', e.target.value)}
                       disabled={!isEditing}
                       title="Select company size"
-                      className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md bg-white dark:bg-slate-700 text-slate-900 dark:text-white disabled:opacity-50"
+                      className="w-full px-3 py-2 border border-slate-300 rounded-md bg-white text-slate-900 disabled:opacity-50"
                     >
                       <option value="1-10 employees">1-10 employees</option>
                       <option value="11-50 employees">11-50 employees</option>
@@ -226,7 +226,7 @@ export default function OrganizationPage() {
                     value={orgData.website}
                     onChange={(e) => handleChange('website', e.target.value)}
                     disabled={!isEditing}
-                    className="bg-white dark:bg-slate-700"
+                    className="bg-white"
                     placeholder="https://example.com"
                   />
                 </div>
@@ -240,7 +240,7 @@ export default function OrganizationPage() {
                       value={orgData.address}
                       onChange={(e) => handleChange('address', e.target.value)}
                       disabled={!isEditing}
-                      className="pl-10 bg-white dark:bg-slate-700"
+                      className="pl-10 bg-white"
                     />
                   </div>
                 </div>
@@ -255,7 +255,7 @@ export default function OrganizationPage() {
                         value={orgData.phone}
                         onChange={(e) => handleChange('phone', e.target.value)}
                         disabled={!isEditing}
-                        className="pl-10 bg-white dark:bg-slate-700"
+                        className="pl-10 bg-white"
                       />
                     </div>
                   </div>
@@ -269,7 +269,7 @@ export default function OrganizationPage() {
                         value={orgData.email}
                         onChange={(e) => handleChange('email', e.target.value)}
                         disabled={!isEditing}
-                        className="pl-10 bg-white dark:bg-slate-700"
+                        className="pl-10 bg-white"
                       />
                     </div>
                   </div>
@@ -297,41 +297,41 @@ export default function OrganizationPage() {
             transition={{ delay: 0.2 }}
             className="space-y-6"
           >
-            <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-slate-200 dark:border-slate-700">
+            <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
               <CardHeader>
                 <CardTitle className="text-lg">Quick Stats</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-600 dark:text-slate-400">Team Members</span>
+                  <span className="text-sm text-slate-600">Team Members</span>
                   <Badge variant="outline">{teamMembers.length}</Badge>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-600 dark:text-slate-400">Active Users</span>
+                  <span className="text-sm text-slate-600">Active Users</span>
                   <Badge variant="outline">{teamMembers.filter(m => m.status === 'active').length}</Badge>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-600 dark:text-slate-400">Pending Invites</span>
+                  <span className="text-sm text-slate-600">Pending Invites</span>
                   <Badge variant="outline">{teamMembers.filter(m => m.status === 'pending').length}</Badge>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-600 dark:text-slate-400">Member Since</span>
+                  <span className="text-sm text-slate-600">Member Since</span>
                   <span className="text-sm font-medium">Jan 2023</span>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-slate-200 dark:border-slate-700">
+            <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
               <CardHeader>
                 <CardTitle className="text-lg">Plan & Billing</CardTitle>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-600 dark:text-slate-400">Current Plan</span>
+                  <span className="text-sm text-slate-600">Current Plan</span>
                   <Badge className="bg-blue-100 text-blue-800">Professional</Badge>
                 </div>
                 <div className="flex items-center justify-between">
-                  <span className="text-sm text-slate-600 dark:text-slate-400">Next Billing</span>
+                  <span className="text-sm text-slate-600">Next Billing</span>
                   <span className="text-sm font-medium">Feb 15, 2024</span>
                 </div>
                 <Button className="w-full" size="sm">
@@ -350,7 +350,7 @@ export default function OrganizationPage() {
           transition={{ delay: 0.3 }}
           className="mt-8"
         >
-          <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-slate-200 dark:border-slate-700">
+          <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div>
@@ -371,7 +371,7 @@ export default function OrganizationPage() {
                 {teamMembers.map((member) => (
                   <div
                     key={member.id}
-                    className="flex items-center justify-between p-4 border border-slate-200 dark:border-slate-600 rounded-lg bg-slate-50/50 dark:bg-slate-700/50"
+                    className="flex items-center justify-between p-4 border border-slate-200 rounded-lg bg-slate-50/50"
                   >
                     <div className="flex items-center gap-4">
                       <div className="w-10 h-10 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white font-medium text-sm">
@@ -379,11 +379,11 @@ export default function OrganizationPage() {
                       </div>
                       <div>
                         <div className="flex items-center gap-2">
-                          <h4 className="font-medium text-slate-900 dark:text-white">{member.name}</h4>
+                          <h4 className="font-medium text-slate-900">{member.name}</h4>
                           {getRoleIcon(member.role)}
                         </div>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">{member.email}</p>
-                        <p className="text-xs text-slate-500 dark:text-slate-500">
+                        <p className="text-sm text-slate-600">{member.email}</p>
+                        <p className="text-xs text-slate-500">
                           Last active: {member.lastActive}
                         </p>
                       </div>
@@ -392,10 +392,10 @@ export default function OrganizationPage() {
                     <div className="flex items-center gap-4">
                       <div className="text-right">
                         <div className="flex items-center gap-2">
-                          <span className="text-sm font-medium text-slate-700 dark:text-slate-300">{member.role}</span>
+                          <span className="text-sm font-medium text-slate-700">{member.role}</span>
                           {getStatusBadge(member.status)}
                         </div>
-                        <p className="text-xs text-slate-500 dark:text-slate-500">
+                        <p className="text-xs text-slate-500">
                           Joined {new Date(member.joinedAt).toLocaleDateString()}
                         </p>
                       </div>

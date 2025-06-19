@@ -112,7 +112,7 @@ export default function DocsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-blue-50">
       <AdvancedNavigation />
       
       <main className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 py-10">
@@ -132,10 +132,10 @@ export default function DocsPage() {
           </div>
           
           <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-5xl font-bold text-slate-900 dark:text-white mb-4">
+            <h1 className="text-5xl font-bold text-slate-900 mb-4">
               Documentation
             </h1>
-            <p className="text-xl text-slate-600 dark:text-slate-400 mb-8">
+            <p className="text-xl text-slate-600 mb-8">
               Everything you need to know about VoiceDrop Pro. From getting started 
               to advanced integrations and best practices.
             </p>
@@ -148,7 +148,7 @@ export default function DocsPage() {
                   placeholder="Search documentation..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-12 pr-4 py-4 text-lg bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 focus:border-blue-500 dark:focus:border-blue-400 rounded-xl"
+                  className="pl-12 pr-4 py-4 text-lg bg-white border-2 border-slate-200 focus:border-blue-500 rounded-xl"
                 />
                 <Button 
                   type="submit"
@@ -168,20 +168,20 @@ export default function DocsPage() {
           transition={{ delay: 0.1 }}
           className="mb-12"
         >
-          <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-6 text-center">
+          <h2 className="text-2xl font-bold text-slate-900 mb-6 text-center">
             Quick Links
           </h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
             {quickLinks.map((link, index) => (
               <Card 
                 key={index}
-                className="bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-200 hover:shadow-lg group cursor-pointer"
+                className="bg-white border-2 border-slate-200 hover:border-blue-300 transition-all duration-200 hover:shadow-lg group cursor-pointer"
               >
                 <CardContent className="p-4 text-center">
-                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center mx-auto mb-3">
-                    <link.icon className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-3">
+                    <link.icon className="w-6 h-6 text-blue-600" />
                   </div>
-                  <h3 className="text-sm font-medium text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                  <h3 className="text-sm font-medium text-slate-900 group-hover:text-blue-600 transition-colors">
                     {link.title}
                   </h3>
                   {link.external && (
@@ -203,18 +203,18 @@ export default function DocsPage() {
           {documentationSections.map((section, index) => (
             <Card 
               key={index}
-              className="bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 hover:shadow-lg transition-all duration-200"
+              className="bg-white border-2 border-slate-200 hover:shadow-lg transition-all duration-200"
             >
               <CardHeader>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center">
-                    <section.icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <section.icon className="w-5 h-5 text-blue-600" />
                   </div>
                   <div>
-                    <CardTitle className="text-xl font-bold text-slate-900 dark:text-white">
+                    <CardTitle className="text-xl font-bold text-slate-900">
                       {section.title}
                     </CardTitle>
-                    <p className="text-slate-600 dark:text-slate-400 text-sm mt-1">
+                    <p className="text-slate-600 text-sm mt-1">
                       {section.description}
                     </p>
                   </div>
@@ -226,11 +226,11 @@ export default function DocsPage() {
                     <li key={articleIndex}>
                       <Link 
                         href={article.href}
-                        className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group"
+                        className="flex items-center justify-between p-3 rounded-lg hover:bg-slate-50 transition-colors group"
                       >
                         <div className="flex items-center gap-3">
-                          <FileText className="w-4 h-4 text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
-                          <span className="text-slate-700 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 font-medium">
+                          <FileText className="w-4 h-4 text-slate-400 group-hover:text-blue-600" />
+                          <span className="text-slate-700 group-hover:text-blue-600 font-medium">
                             {article.title}
                           </span>
                         </div>
@@ -238,7 +238,7 @@ export default function DocsPage() {
                           <Badge variant="outline" className="text-xs">
                             {article.time}
                           </Badge>
-                          <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
+                          <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-blue-600" />
                         </div>
                       </Link>
                     </li>
@@ -255,13 +255,13 @@ export default function DocsPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <Card className="bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700">
+          <Card className="bg-white border-2 border-slate-200">
             <CardHeader>
-              <CardTitle className="text-2xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
-                <BookOpen className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+              <CardTitle className="text-2xl font-bold text-slate-900 flex items-center gap-3">
+                <BookOpen className="w-6 h-6 text-blue-600" />
                 Popular Articles
               </CardTitle>
-              <p className="text-slate-600 dark:text-slate-400">
+              <p className="text-slate-600">
                 Most viewed documentation articles this month
               </p>
             </CardHeader>
@@ -271,27 +271,27 @@ export default function DocsPage() {
                   <Link 
                     key={index}
                     href="#"
-                    className="flex items-center justify-between p-4 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors group border border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-600"
+                    className="flex items-center justify-between p-4 rounded-lg hover:bg-slate-50 transition-colors group border border-slate-200 hover:border-blue-300"
                   >
                     <div className="flex items-center gap-4">
-                      <span className="text-2xl font-bold text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                      <span className="text-2xl font-bold text-slate-400 group-hover:text-blue-600">
                         {(index + 1).toString().padStart(2, '0')}
                       </span>
                       <div>
-                        <h3 className="font-semibold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400">
+                        <h3 className="font-semibold text-slate-900 group-hover:text-blue-600">
                           {article.title}
                         </h3>
                         <div className="flex items-center gap-3 mt-1">
                           <Badge variant="outline" className="text-xs">
                             {article.category}
                           </Badge>
-                          <span className="text-sm text-slate-500 dark:text-slate-400">
+                          <span className="text-sm text-slate-500">
                             {article.views} views
                           </span>
                         </div>
                       </div>
                     </div>
-                    <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400" />
+                    <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-blue-600" />
                   </Link>
                 ))}
               </div>

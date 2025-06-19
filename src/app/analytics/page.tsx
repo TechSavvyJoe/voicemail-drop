@@ -60,9 +60,9 @@ export default function AnalyticsPage() {
   }
 
   const getChangeColor = (change: number) => {
-    if (change > 0) return 'text-emerald-600 dark:text-emerald-400'
-    if (change < 0) return 'text-red-600 dark:text-red-400'
-    return 'text-slate-600 dark:text-slate-400'
+    if (change > 0) return 'text-emerald-600'
+    if (change < 0) return 'text-red-600'
+    return 'text-slate-600'
   }
 
   const getChangeIcon = (change: number) => {
@@ -72,14 +72,14 @@ export default function AnalyticsPage() {
   }
 
   const getChangeBadgeClass = (change: number) => {
-    if (change > 0) return 'bg-emerald-100 text-emerald-700 border-emerald-200 dark:bg-emerald-900/30 dark:text-emerald-400 dark:border-emerald-800'
-    if (change < 0) return 'bg-red-100 text-red-700 border-red-200 dark:bg-red-900/30 dark:text-red-400 dark:border-red-800'
-    return 'bg-slate-100 text-slate-700 border-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700'
+    if (change > 0) return 'bg-emerald-100 text-emerald-700 border-emerald-200'
+    if (change < 0) return 'bg-red-100 text-red-700 border-red-200'
+    return 'bg-slate-100 text-slate-700 border-slate-200'
   }
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-slate-50/50 dark:bg-slate-900">
+      <div className="min-h-screen bg-slate-50/50">
         <AdvancedNavigation />
         <div className="container mx-auto px-4 py-8">
           <div className="flex items-center justify-center h-64">
@@ -151,7 +151,7 @@ export default function AnalyticsPage() {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-blue-50/50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-blue-50/50">
       {/* Advanced Background Elements */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-blue-400/10 rounded-full blur-3xl"></div>
@@ -165,7 +165,7 @@ export default function AnalyticsPage() {
         <motion.div 
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="relative bg-white/40 dark:bg-slate-800/40 backdrop-blur-2xl border-b border-white/20 dark:border-slate-700/50 shadow-2xl"
+          className="relative bg-white/40 backdrop-blur-2xl border-b border-white/20 shadow-2xl"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 via-blue-500/5 to-purple-500/5"></div>
           <div className="relative container mx-auto px-4 py-4">
@@ -174,16 +174,16 @@ export default function AnalyticsPage() {
                 <Zap className="w-3.5 h-3.5 text-white" />
                 <div className="absolute inset-0 rounded-full bg-emerald-400/50 animate-ping"></div>
               </div>
-              <span className="font-bold text-slate-800 dark:text-slate-200 text-base">
+              <span className="font-bold text-slate-800 text-base">
                 Live Analytics Dashboard
               </span>
               <div className="h-1 w-1 bg-slate-400 rounded-full"></div>
-              <span className="font-medium text-slate-600 dark:text-slate-400">
+              <span className="font-medium text-slate-600">
                 Real-time data simulation
               </span>
-              <div className="flex items-center ml-4 px-3 py-1.5 rounded-full bg-emerald-100/80 dark:bg-emerald-900/40 backdrop-blur-sm border border-emerald-200/50 dark:border-emerald-700/50">
+              <div className="flex items-center ml-4 px-3 py-1.5 rounded-full bg-emerald-100/80 backdrop-blur-sm border border-emerald-200/50">
                 <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse mr-2"></div>
-                <span className="text-xs font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">LIVE DATA</span>
+                <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider">LIVE DATA</span>
               </div>
             </div>
           </div>
@@ -196,9 +196,9 @@ export default function AnalyticsPage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-10"
         >
-          <div className="relative overflow-hidden bg-white/30 dark:bg-slate-800/30 backdrop-blur-3xl rounded-3xl border border-white/30 dark:border-slate-700/50 shadow-2xl">
+          <div className="relative overflow-hidden bg-white/30 backdrop-blur-3xl rounded-3xl border border-white/30 shadow-2xl">
             {/* Advanced Glass Background */}
-            <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-white/20 to-transparent dark:from-slate-700/40 dark:via-slate-800/20 dark:to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-white/40 via-white/20 to-transparent"></div>
             <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-indigo-500/5 to-purple-500/5"></div>
             
             {/* Floating Orbs */}
@@ -216,7 +216,7 @@ export default function AnalyticsPage() {
                       <div className="absolute inset-0 rounded-2xl bg-blue-400/30 blur-lg animate-pulse"></div>
                     </div>
                     <div>
-                      <h1 className="text-6xl font-black bg-gradient-to-r from-slate-900 via-blue-800 to-indigo-700 dark:from-white dark:via-blue-200 dark:to-indigo-300 bg-clip-text text-transparent leading-tight">
+                      <h1 className="text-6xl font-black bg-gradient-to-r from-slate-900 via-blue-800 to-indigo-700 bg-clip-text text-transparent leading-tight">
                         Analytics
                       </h1>
                       <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
@@ -225,23 +225,23 @@ export default function AnalyticsPage() {
                     </div>
                   </div>
                   
-                  <p className="text-slate-600 dark:text-slate-300 text-xl font-medium leading-relaxed mb-6">
+                  <p className="text-slate-600 text-xl font-medium leading-relaxed mb-6">
                     Advanced performance insights, real-time campaign analytics, and customer engagement intelligence 
                     powered by machine learning algorithms
                   </p>
                   
                   <div className="flex flex-wrap items-center gap-4">
-                    <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-emerald-100/80 dark:bg-emerald-900/40 backdrop-blur-sm border border-emerald-200/50 dark:border-emerald-700/50">
+                    <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-emerald-100/80 backdrop-blur-sm border border-emerald-200/50">
                       <div className="relative w-3 h-3 bg-emerald-500 rounded-full">
                         <div className="absolute inset-0 bg-emerald-400 rounded-full animate-ping"></div>
                       </div>
-                      <span className="text-sm font-bold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider">Live Intelligence</span>
+                      <span className="text-sm font-bold text-emerald-700 uppercase tracking-wider">Live Intelligence</span>
                     </div>
-                    <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-blue-100/80 dark:bg-blue-900/40 backdrop-blur-sm border border-blue-200/50 dark:border-blue-700/50">
-                      <Activity className="w-4 h-4 text-blue-600 dark:text-blue-400" />
-                      <span className="text-sm font-bold text-blue-700 dark:text-blue-400">Real-time Processing</span>
+                    <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-blue-100/80 backdrop-blur-sm border border-blue-200/50">
+                      <Activity className="w-4 h-4 text-blue-600" />
+                      <span className="text-sm font-bold text-blue-700">Real-time Processing</span>
                     </div>
-                    <div className="text-sm text-slate-500 dark:text-slate-400 font-medium bg-white/50 dark:bg-slate-700/50 px-3 py-1 rounded-full">
+                    <div className="text-sm text-slate-500 font-medium bg-white/50 px-3 py-1 rounded-full">
                       Updates every 30 seconds
                     </div>
                   </div>
@@ -252,7 +252,7 @@ export default function AnalyticsPage() {
                     <select
                       value={dateRange}
                       onChange={(e) => setDateRange(e.target.value)}
-                      className="flex h-14 w-auto min-w-[180px] rounded-2xl border border-white/40 dark:border-slate-600/50 bg-white/60 dark:bg-slate-700/60 backdrop-blur-2xl px-5 py-3 text-sm font-bold shadow-xl transition-all hover:shadow-2xl hover:bg-white/80 dark:hover:bg-slate-700/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none"
+                      className="flex h-14 w-auto min-w-[180px] rounded-2xl border border-white/40 bg-white/60 backdrop-blur-2xl px-5 py-3 text-sm font-bold shadow-xl transition-all hover:shadow-2xl hover:bg-white/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 appearance-none"
                       aria-label="Select date range"
                     >
                       <option value="7d">Last 7 Days</option>
@@ -263,7 +263,7 @@ export default function AnalyticsPage() {
                     <Calendar className="absolute right-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" />
                   </div>
                   
-                  <Button variant="outline" className="gap-3 shadow-xl bg-white/60 dark:bg-slate-700/60 backdrop-blur-2xl border-white/40 dark:border-slate-600/50 hover:bg-white/80 dark:hover:bg-slate-700/80 h-14 px-6 rounded-2xl font-bold">
+                  <Button variant="outline" className="gap-3 shadow-xl bg-white/60 backdrop-blur-2xl border-white/40 hover:bg-white/80 h-14 px-6 rounded-2xl font-bold">
                     <Filter className="w-5 h-5" />
                     Advanced Filters
                   </Button>
@@ -294,11 +294,11 @@ export default function AnalyticsPage() {
               className="group relative"
             >
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-indigo-400/20 to-purple-400/20 rounded-3xl blur-xl group-hover:blur-2xl transition-all duration-500"></div>
-              <Card className="relative overflow-hidden border-0 shadow-2xl hover:shadow-3xl transition-all duration-500 group-hover:-translate-y-3 group-hover:scale-[1.02] bg-white/40 dark:bg-slate-800/40 backdrop-blur-3xl">
+              <Card className="relative overflow-hidden border-0 shadow-2xl hover:shadow-3xl transition-all duration-500 group-hover:-translate-y-3 group-hover:scale-[1.02] bg-white/40 backdrop-blur-3xl">
                 {/* Enhanced Background Layers */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-white/30 to-transparent dark:from-slate-700/60 dark:via-slate-800/30 dark:to-transparent"></div>
-                <div className={`absolute inset-0 bg-gradient-to-br ${stat.bgGradient} dark:from-slate-700/30 dark:to-slate-800/30 opacity-30`} />
-                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent dark:from-slate-700/20 dark:to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-white/30 to-transparent"></div>
+                <div className={`absolute inset-0 bg-gradient-to-br ${stat.bgGradient} opacity-30`} />
+                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent" />
                 
                 {/* Floating Orb Effects */}
                 <div className="absolute top-4 right-4 w-12 h-12 bg-blue-400/10 rounded-full blur-xl group-hover:blur-2xl transition-all duration-500"></div>
@@ -319,15 +319,15 @@ export default function AnalyticsPage() {
                   </div>
                   
                   <div>
-                    <p className="text-sm font-bold text-slate-600 dark:text-slate-300 mb-4 uppercase tracking-widest">
+                    <p className="text-sm font-bold text-slate-600 mb-4 uppercase tracking-widest">
                       {stat.title}
                     </p>
-                    <p className="text-5xl font-black text-slate-900 dark:text-white mb-4 tracking-tight">
+                    <p className="text-5xl font-black text-slate-900 mb-4 tracking-tight">
                       {stat.format(stat.value)}
                     </p>
                     
                     <div className="flex items-center gap-3">
-                      <div className="flex-1 h-2 bg-slate-200/60 dark:bg-slate-600/60 rounded-full overflow-hidden backdrop-blur-sm">
+                      <div className="flex-1 h-2 bg-slate-200/60 rounded-full overflow-hidden backdrop-blur-sm">
                         <motion.div 
                           className={`h-full bg-gradient-to-r ${stat.gradient} rounded-full shadow-lg`}
                           initial={{ width: 0 }}
@@ -335,17 +335,17 @@ export default function AnalyticsPage() {
                           transition={{ delay: index * 0.1 + 0.5, duration: 1.5, ease: "easeOut" }}
                         />
                       </div>
-                      <span className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider whitespace-nowrap">
+                      <span className="text-xs text-slate-500 font-bold uppercase tracking-wider whitespace-nowrap">
                         vs period
                       </span>
                     </div>
                     
-                    <div className="mt-4 pt-4 border-t border-white/30 dark:border-slate-600/30">
+                    <div className="mt-4 pt-4 border-t border-white/30">
                       <div className="flex items-center justify-between text-xs">
-                        <span className="text-slate-500 dark:text-slate-400 font-semibold">Trend Analysis</span>
+                        <span className="text-slate-500 font-semibold">Trend Analysis</span>
                         <div className="flex items-center gap-1">
                           <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                          <span className="text-slate-600 dark:text-slate-300 font-bold">Active</span>
+                          <span className="text-slate-600 font-bold">Active</span>
                         </div>
                       </div>
                     </div>
@@ -367,9 +367,9 @@ export default function AnalyticsPage() {
           <div className="xl:col-span-2">
             <div className="relative group">
               <div className="absolute inset-0 bg-gradient-to-r from-blue-400/20 via-indigo-400/20 to-purple-400/20 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-500"></div>
-              <Card className="relative border-0 shadow-2xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-3xl border border-white/30 dark:border-slate-700/50">
+              <Card className="relative border-0 shadow-2xl bg-white/40 backdrop-blur-3xl border border-white/30">
                 {/* Advanced Background Layers */}
-                <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-white/30 to-transparent dark:from-slate-700/50 dark:via-slate-800/30 dark:to-transparent rounded-3xl"></div>
+                <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-white/30 to-transparent rounded-3xl"></div>
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-500/5 via-indigo-500/5 to-purple-500/5 rounded-3xl"></div>
                 
                 <CardHeader className="pb-8 relative">
@@ -382,19 +382,19 @@ export default function AnalyticsPage() {
                         <div className="absolute inset-0 rounded-2xl bg-blue-400/30 blur-lg animate-pulse"></div>
                       </div>
                       <div>
-                        <CardTitle className="text-3xl font-black text-slate-900 dark:text-white mb-2">Performance Intelligence</CardTitle>
-                        <p className="text-base text-slate-600 dark:text-slate-400 font-semibold">
+                        <CardTitle className="text-3xl font-black text-slate-900 mb-2">Performance Intelligence</CardTitle>
+                        <p className="text-base text-slate-600 font-semibold">
                           Advanced campaign analytics with predictive insights
                         </p>
                       </div>
                     </div>
-                    <Badge variant="outline" className="text-sm bg-white/60 dark:bg-slate-700/60 backdrop-blur-sm border-white/40 dark:border-slate-600/50 px-4 py-2 font-bold">
+                    <Badge variant="outline" className="text-sm bg-white/60 backdrop-blur-sm border-white/40 px-4 py-2 font-bold">
                       {dateRange === '7d' ? 'Weekly View' : dateRange === '30d' ? 'Monthly View' : dateRange === '90d' ? 'Quarterly View' : 'Annual View'}
                     </Badge>
                   </div>
                 </CardHeader>
                 <CardContent className="relative">
-                  <div className="h-96 flex items-center justify-center bg-gradient-to-br from-slate-50/80 to-blue-50/80 dark:from-slate-800/80 dark:to-slate-900/80 rounded-3xl border border-white/30 dark:border-slate-700/30 backdrop-blur-sm relative overflow-hidden">
+                  <div className="h-96 flex items-center justify-center bg-gradient-to-br from-slate-50/80 to-blue-50/80 rounded-3xl border border-white/30 backdrop-blur-sm relative overflow-hidden">
                     {/* Floating Background Elements */}
                     <div className="absolute top-4 right-8 w-20 h-20 bg-blue-400/10 rounded-full blur-2xl"></div>
                     <div className="absolute bottom-8 left-8 w-16 h-16 bg-indigo-400/10 rounded-full blur-xl"></div>
@@ -404,14 +404,14 @@ export default function AnalyticsPage() {
                         <BarChart3 className="w-28 h-28 text-blue-400 mx-auto" />
                         <div className="absolute inset-0 bg-blue-400/20 blur-2xl rounded-full"></div>
                       </div>
-                      <h3 className="text-slate-700 dark:text-slate-300 font-black text-2xl mb-4">
+                      <h3 className="text-slate-700 font-black text-2xl mb-4">
                         Interactive Analytics Engine
                       </h3>
-                      <p className="text-base text-slate-500 dark:text-slate-400 max-w-md mx-auto leading-relaxed mb-6">
+                      <p className="text-base text-slate-500 max-w-md mx-auto leading-relaxed mb-6">
                         Advanced charting with D3.js, Chart.js, or Recharts would provide comprehensive real-time analytics visualization with interactive drill-down capabilities
                       </p>
                       <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                        <Button variant="outline" className="bg-white/60 dark:bg-slate-700/60 backdrop-blur-sm border-white/40 dark:border-slate-600/50 font-bold">
+                        <Button variant="outline" className="bg-white/60 backdrop-blur-sm border-white/40 font-bold">
                           <TrendingUp className="w-5 h-5 mr-2" />
                           View Live Charts
                         </Button>
@@ -430,9 +430,9 @@ export default function AnalyticsPage() {
           {/* Ultra-Enhanced Key Metrics */}
           <div className="relative group">
             <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/20 via-teal-400/20 to-cyan-400/20 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-500"></div>
-            <Card className="relative border-0 shadow-2xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-3xl border border-white/30 dark:border-slate-700/50">
+            <Card className="relative border-0 shadow-2xl bg-white/40 backdrop-blur-3xl border border-white/30">
               {/* Advanced Background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-white/30 to-transparent dark:from-slate-700/50 dark:via-slate-800/30 dark:to-transparent rounded-3xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-white/30 to-transparent rounded-3xl"></div>
               <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 via-teal-500/5 to-cyan-500/5 rounded-3xl"></div>
               
               <CardHeader className="pb-8 relative">
@@ -444,8 +444,8 @@ export default function AnalyticsPage() {
                     <div className="absolute inset-0 rounded-2xl bg-emerald-400/30 blur-lg animate-pulse"></div>
                   </div>
                   <div>
-                    <CardTitle className="text-3xl font-black text-slate-900 dark:text-white mb-2">Key Metrics</CardTitle>
-                    <p className="text-base text-slate-600 dark:text-slate-400 font-semibold">
+                    <CardTitle className="text-3xl font-black text-slate-900 mb-2">Key Metrics</CardTitle>
+                    <p className="text-base text-slate-600 font-semibold">
                       Critical performance indicators
                     </p>
                   </div>
@@ -461,20 +461,20 @@ export default function AnalyticsPage() {
                     className="relative group/metric"
                   >
                     <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/10 to-teal-400/10 rounded-2xl blur-lg group-hover/metric:blur-xl transition-all duration-300"></div>
-                    <div className="relative p-6 rounded-2xl bg-white/40 dark:bg-slate-700/40 backdrop-blur-sm border border-white/40 dark:border-slate-600/40 hover:bg-white/60 dark:hover:bg-slate-700/60 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                    <div className="relative p-6 rounded-2xl bg-white/40 backdrop-blur-sm border border-white/40 hover:bg-white/60 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                       <div className="flex items-center justify-between mb-4">
-                        <span className="font-black text-slate-900 dark:text-white capitalize text-lg">
+                        <span className="font-black text-slate-900 capitalize text-lg">
                           {metric.metric.replace('_', ' ')}
                         </span>
-                        <div className={`flex items-center gap-2 text-sm font-black px-3 py-1.5 rounded-full ${getChangeColor(metric.change)} bg-white/60 dark:bg-slate-700/60 backdrop-blur-sm`}>
+                        <div className={`flex items-center gap-2 text-sm font-black px-3 py-1.5 rounded-full ${getChangeColor(metric.change)} bg-white/60 backdrop-blur-sm`}>
                           {getChangeIcon(metric.change)}
                           {Math.abs(metric.change)}%
                         </div>
                       </div>
-                      <div className="text-4xl font-black text-slate-900 dark:text-white mb-4">
+                      <div className="text-4xl font-black text-slate-900 mb-4">
                         {metric.value.toLocaleString()}
                       </div>
-                      <div className="h-3 bg-slate-200/60 dark:bg-slate-600/60 rounded-full overflow-hidden backdrop-blur-sm">
+                      <div className="h-3 bg-slate-200/60 rounded-full overflow-hidden backdrop-blur-sm">
                         <motion.div 
                           className="h-full bg-gradient-to-r from-emerald-500 to-teal-500 rounded-full shadow-lg"
                           initial={{ width: 0 }}
@@ -482,11 +482,11 @@ export default function AnalyticsPage() {
                           transition={{ delay: index * 0.1 + 0.5, duration: 1.5, ease: "easeOut" }}
                         />
                       </div>
-                      <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/30 dark:border-slate-600/30">
-                        <span className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-wider">Performance</span>
+                      <div className="flex items-center justify-between mt-3 pt-3 border-t border-white/30">
+                        <span className="text-xs text-slate-500 font-bold uppercase tracking-wider">Performance</span>
                         <div className="flex items-center gap-1">
                           <div className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                          <span className="text-xs text-slate-600 dark:text-slate-300 font-bold">Live</span>
+                          <span className="text-xs text-slate-600 font-bold">Live</span>
                         </div>
                       </div>
                     </div>
@@ -497,10 +497,10 @@ export default function AnalyticsPage() {
                       <Activity className="w-20 h-20 text-slate-400 mx-auto" />
                       <div className="absolute inset-0 bg-slate-400/20 blur-xl rounded-full"></div>
                     </div>
-                    <p className="text-slate-600 dark:text-slate-400 font-bold text-lg">
+                    <p className="text-slate-600 font-bold text-lg">
                       No metrics data available
                     </p>
-                    <p className="text-slate-500 dark:text-slate-500 text-sm mt-2">
+                    <p className="text-slate-500 text-sm mt-2">
                       Start a campaign to see performance data
                     </p>
                   </div>
@@ -520,9 +520,9 @@ export default function AnalyticsPage() {
           {/* Enhanced Time Slots Analysis */}
           <div className="relative group">
             <div className="absolute inset-0 bg-gradient-to-r from-purple-400/20 via-violet-400/20 to-indigo-400/20 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-500"></div>
-            <Card className="relative border-0 shadow-2xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-3xl border border-white/30 dark:border-slate-700/50">
+            <Card className="relative border-0 shadow-2xl bg-white/40 backdrop-blur-3xl border border-white/30">
               {/* Advanced Background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-white/30 to-transparent dark:from-slate-700/50 dark:via-slate-800/30 dark:to-transparent rounded-3xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-white/30 to-transparent rounded-3xl"></div>
               <div className="absolute inset-0 bg-gradient-to-r from-purple-500/5 via-violet-500/5 to-indigo-500/5 rounded-3xl"></div>
               
               <CardHeader className="pb-8 relative">
@@ -534,8 +534,8 @@ export default function AnalyticsPage() {
                     <div className="absolute inset-0 rounded-2xl bg-purple-400/30 blur-lg animate-pulse"></div>
                   </div>
                   <div>
-                    <CardTitle className="text-3xl font-black text-slate-900 dark:text-white mb-2">Optimal Call Times</CardTitle>
-                    <p className="text-base text-slate-600 dark:text-slate-400 font-semibold">
+                    <CardTitle className="text-3xl font-black text-slate-900 mb-2">Optimal Call Times</CardTitle>
+                    <p className="text-base text-slate-600 font-semibold">
                       Success rates throughout the day
                     </p>
                   </div>
@@ -554,32 +554,32 @@ export default function AnalyticsPage() {
                         className="relative group/slot"
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-purple-400/10 to-violet-400/10 rounded-2xl blur-lg group-hover/slot:blur-xl transition-all duration-300"></div>
-                        <div className="relative flex items-center justify-between p-6 rounded-2xl bg-white/40 dark:bg-slate-700/40 backdrop-blur-sm border border-white/40 dark:border-slate-600/40 hover:bg-white/60 dark:hover:bg-slate-700/60 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                        <div className="relative flex items-center justify-between p-6 rounded-2xl bg-white/40 backdrop-blur-sm border border-white/40 hover:bg-white/60 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                           <div className="flex items-center gap-5">
-                            <div className="w-14 h-14 rounded-2xl bg-gradient-to-r from-purple-100/80 to-violet-100/80 dark:from-purple-900/40 dark:to-violet-900/40 flex items-center justify-center backdrop-blur-sm">
-                              <Calendar className="w-7 h-7 text-purple-600 dark:text-purple-400" />
+                            <div className="w-14 h-14 rounded-2xl bg-gradient-to-r from-purple-100/80 to-violet-100/80 flex items-center justify-center backdrop-blur-sm">
+                              <Calendar className="w-7 h-7 text-purple-600" />
                             </div>
                             <div>
-                              <div className="font-black text-slate-900 dark:text-white text-xl mb-1">
+                              <div className="font-black text-slate-900 text-xl mb-1">
                                 {slot.time}
                               </div>
-                              <div className="text-sm text-slate-600 dark:text-slate-400 font-bold">
+                              <div className="text-sm text-slate-600 font-bold">
                                 {slot.success}/{slot.total} calls delivered
                               </div>
                               <div className="flex items-center gap-2 mt-2">
                                 <div className="w-3 h-3 bg-purple-400 rounded-full animate-pulse"></div>
-                                <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider">Active Period</span>
+                                <span className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Active Period</span>
                               </div>
                             </div>
                           </div>
                           <div className="text-right">
-                            <div className="text-3xl font-black text-slate-900 dark:text-white mb-2">
+                            <div className="text-3xl font-black text-slate-900 mb-2">
                               {successRate}%
                             </div>
-                            <div className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest mb-3">
+                            <div className="text-xs text-slate-500 font-bold uppercase tracking-widest mb-3">
                               success rate
                             </div>
-                            <div className="w-24 h-3 bg-slate-200/60 dark:bg-slate-600/60 rounded-full overflow-hidden backdrop-blur-sm">
+                            <div className="w-24 h-3 bg-slate-200/60 rounded-full overflow-hidden backdrop-blur-sm">
                               <motion.div 
                                 className="h-full bg-gradient-to-r from-purple-500 to-violet-500 rounded-full shadow-lg"
                                 initial={{ width: 0 }}
@@ -597,10 +597,10 @@ export default function AnalyticsPage() {
                         <Clock className="w-20 h-20 text-slate-400 mx-auto" />
                         <div className="absolute inset-0 bg-slate-400/20 blur-xl rounded-full"></div>
                       </div>
-                      <p className="text-slate-600 dark:text-slate-400 font-bold text-lg">
+                      <p className="text-slate-600 font-bold text-lg">
                         No time slot data available
                       </p>
-                      <p className="text-slate-500 dark:text-slate-500 text-sm mt-2">
+                      <p className="text-slate-500 text-sm mt-2">
                         Run campaigns to analyze optimal call times
                       </p>
                     </div>
@@ -613,9 +613,9 @@ export default function AnalyticsPage() {
           {/* Enhanced Regional Performance */}
           <div className="relative group">
             <div className="absolute inset-0 bg-gradient-to-r from-amber-400/20 via-orange-400/20 to-red-400/20 rounded-3xl blur-2xl group-hover:blur-3xl transition-all duration-500"></div>
-            <Card className="relative border-0 shadow-2xl bg-white/40 dark:bg-slate-800/40 backdrop-blur-3xl border border-white/30 dark:border-slate-700/50">
+            <Card className="relative border-0 shadow-2xl bg-white/40 backdrop-blur-3xl border border-white/30">
               {/* Advanced Background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-white/30 to-transparent dark:from-slate-700/50 dark:via-slate-800/30 dark:to-transparent rounded-3xl"></div>
+              <div className="absolute inset-0 bg-gradient-to-br from-white/50 via-white/30 to-transparent rounded-3xl"></div>
               <div className="absolute inset-0 bg-gradient-to-r from-amber-500/5 via-orange-500/5 to-red-500/5 rounded-3xl"></div>
               
               <CardHeader className="pb-8 relative">
@@ -627,8 +627,8 @@ export default function AnalyticsPage() {
                     <div className="absolute inset-0 rounded-2xl bg-amber-400/30 blur-lg animate-pulse"></div>
                   </div>
                   <div>
-                    <CardTitle className="text-3xl font-black text-slate-900 dark:text-white mb-2">Regional Insights</CardTitle>
-                    <p className="text-base text-slate-600 dark:text-slate-400 font-semibold">
+                    <CardTitle className="text-3xl font-black text-slate-900 mb-2">Regional Insights</CardTitle>
+                    <p className="text-base text-slate-600 font-semibold">
                       Performance across geographic regions
                     </p>
                   </div>
@@ -647,32 +647,32 @@ export default function AnalyticsPage() {
                         className="relative group/region"
                       >
                         <div className="absolute inset-0 bg-gradient-to-r from-amber-400/10 to-orange-400/10 rounded-2xl blur-lg group-hover/region:blur-xl transition-all duration-300"></div>
-                        <div className="relative flex items-center justify-between p-6 rounded-2xl bg-white/40 dark:bg-slate-700/40 backdrop-blur-sm border border-white/40 dark:border-slate-600/40 hover:bg-white/60 dark:hover:bg-slate-700/60 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
+                        <div className="relative flex items-center justify-between p-6 rounded-2xl bg-white/40 backdrop-blur-sm border border-white/40 hover:bg-white/60 transition-all duration-300 hover:shadow-xl hover:-translate-y-1">
                           <div className="flex items-center gap-5">
-                            <div className="w-14 h-14 rounded-2xl bg-gradient-to-r from-amber-100/80 to-orange-100/80 dark:from-amber-900/40 dark:to-orange-900/40 flex items-center justify-center backdrop-blur-sm">
-                              <Target className="w-7 h-7 text-amber-600 dark:text-amber-400" />
+                            <div className="w-14 h-14 rounded-2xl bg-gradient-to-r from-amber-100/80 to-orange-100/80 flex items-center justify-center backdrop-blur-sm">
+                              <Target className="w-7 h-7 text-amber-600" />
                             </div>
                             <div>
-                              <div className="font-black text-slate-900 dark:text-white text-xl mb-1">
+                              <div className="font-black text-slate-900 text-xl mb-1">
                                 {region.region}
                               </div>
-                              <div className="text-sm text-slate-600 dark:text-slate-400 font-bold">
+                              <div className="text-sm text-slate-600 font-bold">
                                 {region.success}/{region.calls} calls successful
                               </div>
                               <div className="flex items-center gap-2 mt-2">
                                 <div className="w-3 h-3 bg-amber-400 rounded-full animate-pulse"></div>
-                                <span className="text-xs text-slate-500 dark:text-slate-400 font-semibold uppercase tracking-wider">Active Region</span>
+                                <span className="text-xs text-slate-500 font-semibold uppercase tracking-wider">Active Region</span>
                               </div>
                             </div>
                           </div>
                           <div className="text-right">
-                            <div className="text-3xl font-black text-slate-900 dark:text-white mb-2">
+                            <div className="text-3xl font-black text-slate-900 mb-2">
                               {successRate}%
                             </div>
-                            <div className="text-xs text-slate-500 dark:text-slate-400 font-bold uppercase tracking-widest mb-3">
+                            <div className="text-xs text-slate-500 font-bold uppercase tracking-widest mb-3">
                               success rate
                             </div>
-                            <div className="w-24 h-3 bg-slate-200/60 dark:bg-slate-600/60 rounded-full overflow-hidden backdrop-blur-sm">
+                            <div className="w-24 h-3 bg-slate-200/60 rounded-full overflow-hidden backdrop-blur-sm">
                               <motion.div 
                                 className="h-full bg-gradient-to-r from-amber-500 to-orange-500 rounded-full shadow-lg"
                                 initial={{ width: 0 }}
@@ -690,10 +690,10 @@ export default function AnalyticsPage() {
                         <Target className="w-20 h-20 text-slate-400 mx-auto" />
                         <div className="absolute inset-0 bg-slate-400/20 blur-xl rounded-full"></div>
                       </div>
-                      <p className="text-slate-600 dark:text-slate-400 font-bold text-lg">
+                      <p className="text-slate-600 font-bold text-lg">
                         No regional data available
                       </p>
-                      <p className="text-slate-500 dark:text-slate-500 text-sm mt-2">
+                      <p className="text-slate-500 text-sm mt-2">
                         Expand campaigns to multiple regions
                       </p>
                     </div>

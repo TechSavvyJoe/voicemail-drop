@@ -41,7 +41,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-slate-100 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-slate-100">
       <AdvancedNavigation />
       
       <div className="container mx-auto px-6 py-8 max-w-4xl">
@@ -52,10 +52,10 @@ export default function ProfilePage() {
         >
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
+              <h1 className="text-3xl font-bold text-slate-900 mb-2">
                 Profile Settings
               </h1>
-              <p className="text-slate-600 dark:text-slate-300">
+              <p className="text-slate-600">
                 Manage your personal information and account preferences
               </p>
             </div>
@@ -75,7 +75,7 @@ export default function ProfilePage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.1 }}
           >
-            <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-slate-200 dark:border-slate-700">
+            <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
               <CardContent className="p-6">
                 <div className="text-center">
                   <div className="relative inline-block mb-4">
@@ -91,13 +91,13 @@ export default function ProfilePage() {
                     </Button>
                   </div>
                   
-                  <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-1">
+                  <h3 className="text-xl font-semibold text-slate-900 mb-1">
                     {formData.firstName} {formData.lastName}
                   </h3>
-                  <p className="text-slate-600 dark:text-slate-400 mb-2">{formData.role}</p>
-                  <p className="text-sm text-slate-500 dark:text-slate-500 mb-4">{formData.company}</p>
+                  <p className="text-slate-600 mb-2">{formData.role}</p>
+                  <p className="text-sm text-slate-500 mb-4">{formData.company}</p>
                   
-                  <div className="flex items-center justify-center gap-4 text-sm text-slate-600 dark:text-slate-400 mb-6">
+                  <div className="flex items-center justify-center gap-4 text-sm text-slate-600 mb-6">
                     <div className="flex items-center gap-1">
                       <MapPin className="w-4 h-4" />
                       <span>{formData.location}</span>
@@ -128,7 +128,7 @@ export default function ProfilePage() {
             transition={{ delay: 0.2 }}
             className="lg:col-span-2"
           >
-            <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-slate-200 dark:border-slate-700">
+            <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <User className="w-5 h-5" />
@@ -147,7 +147,7 @@ export default function ProfilePage() {
                       value={formData.firstName}
                       onChange={(e) => handleChange('firstName', e.target.value)}
                       disabled={!isEditing}
-                      className="bg-white dark:bg-slate-700"
+                      className="bg-white"
                     />
                   </div>
                   <div className="space-y-2">
@@ -157,7 +157,7 @@ export default function ProfilePage() {
                       value={formData.lastName}
                       onChange={(e) => handleChange('lastName', e.target.value)}
                       disabled={!isEditing}
-                      className="bg-white dark:bg-slate-700"
+                      className="bg-white"
                     />
                   </div>
                 </div>
@@ -172,7 +172,7 @@ export default function ProfilePage() {
                       value={formData.email}
                       onChange={(e) => handleChange('email', e.target.value)}
                       disabled={!isEditing}
-                      className="pl-10 bg-white dark:bg-slate-700"
+                      className="pl-10 bg-white"
                     />
                   </div>
                 </div>
@@ -186,7 +186,7 @@ export default function ProfilePage() {
                       value={formData.phone}
                       onChange={(e) => handleChange('phone', e.target.value)}
                       disabled={!isEditing}
-                      className="pl-10 bg-white dark:bg-slate-700"
+                      className="pl-10 bg-white"
                     />
                   </div>
                 </div>
@@ -201,7 +201,7 @@ export default function ProfilePage() {
                         value={formData.company}
                         onChange={(e) => handleChange('company', e.target.value)}
                         disabled={!isEditing}
-                        className="pl-10 bg-white dark:bg-slate-700"
+                        className="pl-10 bg-white"
                       />
                     </div>
                   </div>
@@ -212,7 +212,7 @@ export default function ProfilePage() {
                       value={formData.role}
                       onChange={(e) => handleChange('role', e.target.value)}
                       disabled={!isEditing}
-                      className="bg-white dark:bg-slate-700"
+                      className="bg-white"
                     />
                   </div>
                 </div>
@@ -225,7 +225,7 @@ export default function ProfilePage() {
                     onChange={(e) => handleChange('bio', e.target.value)}
                     disabled={!isEditing}
                     rows={3}
-                    className="bg-white dark:bg-slate-700"
+                    className="bg-white"
                     placeholder="Tell us about yourself..."
                   />
                 </div>
@@ -240,7 +240,7 @@ export default function ProfilePage() {
                         value={formData.location}
                         onChange={(e) => handleChange('location', e.target.value)}
                         disabled={!isEditing}
-                        className="pl-10 bg-white dark:bg-slate-700"
+                        className="pl-10 bg-white"
                       />
                     </div>
                   </div>
@@ -252,7 +252,7 @@ export default function ProfilePage() {
                       onChange={(e) => handleChange('timezone', e.target.value)}
                       disabled={!isEditing}
                       title="Select your timezone"
-                      className="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md bg-white dark:bg-slate-700 text-slate-900 dark:text-white disabled:opacity-50"
+                      className="w-full px-3 py-2 border border-slate-300 rounded-md bg-white text-slate-900 disabled:opacity-50"
                     >
                       <option value="America/Los_Angeles">Pacific Time (PT)</option>
                       <option value="America/Denver">Mountain Time (MT)</option>

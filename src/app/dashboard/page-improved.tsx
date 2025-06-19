@@ -105,7 +105,7 @@ export default function ImprovedDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <div className="min-h-screen bg-slate-50">
       <AdvancedNavigation />
       
       <div className="container mx-auto px-6 py-8 max-w-7xl">
@@ -115,7 +115,7 @@ export default function ImprovedDashboardPage() {
           animate={{ opacity: 1, y: 0 }}
           className="mb-8"
         >
-          <div className="bg-white dark:bg-slate-800 rounded-xl shadow-lg border border-slate-200 dark:border-slate-700 p-8">
+          <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-8">
             <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
               <div className="mb-6 lg:mb-0">
                 <div className="flex items-center gap-4 mb-4">
@@ -123,10 +123,10 @@ export default function ImprovedDashboardPage() {
                     <Sparkles className="w-8 h-8 text-white" />
                   </div>
                   <div>
-                    <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-2">
+                    <h1 className="text-4xl font-bold text-slate-900 mb-2">
                       Welcome back, {isDemoMode ? 'John' : 'User'}!
                     </h1>
-                    <p className="text-lg text-slate-600 dark:text-slate-300 font-medium">
+                    <p className="text-lg text-slate-600 font-medium">
                       Command Center Dashboard
                     </p>
                   </div>
@@ -179,14 +179,14 @@ export default function ImprovedDashboardPage() {
               transition={{ delay: index * 0.1 }}
             >
               <Link href={stat.href}>
-                <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 group">
+                <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white border-slate-200 group">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex-1">
-                        <p className="text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">
+                        <p className="text-sm font-medium text-slate-600 mb-2">
                           {stat.title}
                         </p>
-                        <p className="text-3xl font-bold text-slate-900 dark:text-white">
+                        <p className="text-3xl font-bold text-slate-900">
                           {stat.value}
                         </p>
                       </div>
@@ -198,8 +198,8 @@ export default function ImprovedDashboardPage() {
                     <div className="flex items-center justify-between">
                       <div className={`flex items-center px-2 py-1 rounded-full text-sm font-medium ${
                         stat.trend === 'up' 
-                          ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400' 
-                          : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
+                          ? 'bg-emerald-100 text-emerald-700' 
+                          : 'bg-red-100 text-red-700'
                       }`}>
                         {stat.trend === 'up' ? (
                           <ArrowUp className="h-3 w-3 mr-1" />
@@ -224,21 +224,21 @@ export default function ImprovedDashboardPage() {
           transition={{ delay: 0.5 }}
           className="mb-8"
         >
-          <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
+          <Card className="bg-white border-slate-200">
             <CardHeader>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-blue-100 dark:bg-blue-900/20 flex items-center justify-center">
-                    <BarChart3 className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                  <div className="w-12 h-12 rounded-lg bg-blue-100 flex items-center justify-center">
+                    <BarChart3 className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
-                    <CardTitle className="text-xl text-slate-900 dark:text-white">Monthly Usage Analytics</CardTitle>
-                    <CardDescription className="text-slate-600 dark:text-slate-400">
+                    <CardTitle className="text-xl text-slate-900">Monthly Usage Analytics</CardTitle>
+                    <CardDescription className="text-slate-600">
                       {stats?.monthlyUsage || 0} of {stats?.monthlyLimit || 0} voicemails sent this month
                     </CardDescription>
                   </div>
                 </div>
-                <Badge variant="outline" className="text-sm bg-slate-50 dark:bg-slate-700 border-slate-200 dark:border-slate-600">
+                <Badge variant="outline" className="text-sm bg-slate-50 border-slate-200">
                   {Math.round(((stats?.monthlyUsage || 0) / (stats?.monthlyLimit || 1)) * 100)}% utilized
                 </Badge>
               </div>
@@ -247,9 +247,9 @@ export default function ImprovedDashboardPage() {
               <div className="space-y-4">
                 <Progress 
                   value={((stats?.monthlyUsage || 0) / (stats?.monthlyLimit || 1)) * 100} 
-                  className="h-4 bg-slate-200 dark:bg-slate-700"
+                  className="h-4 bg-slate-200"
                 />
-                <div className="flex justify-between text-sm text-slate-600 dark:text-slate-400 font-medium">
+                <div className="flex justify-between text-sm text-slate-600 font-medium">
                   <span>{stats?.monthlyUsage || 0} used</span>
                   <span>{(stats?.monthlyLimit || 0) - (stats?.monthlyUsage || 0)} remaining</span>
                 </div>
@@ -267,20 +267,20 @@ export default function ImprovedDashboardPage() {
             transition={{ delay: 0.6 }}
             className="xl:col-span-2"
           >
-            <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
+            <Card className="bg-white border-slate-200">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-emerald-100 dark:bg-emerald-900/20 flex items-center justify-center">
-                      <Target className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
+                    <div className="w-12 h-12 rounded-lg bg-emerald-100 flex items-center justify-center">
+                      <Target className="w-6 h-6 text-emerald-600" />
                     </div>
                     <div>
-                      <CardTitle className="text-xl text-slate-900 dark:text-white">Active Campaigns</CardTitle>
-                      <CardDescription className="text-slate-600 dark:text-slate-400">Your latest voicemail campaigns</CardDescription>
+                      <CardTitle className="text-xl text-slate-900">Active Campaigns</CardTitle>
+                      <CardDescription className="text-slate-600">Your latest voicemail campaigns</CardDescription>
                     </div>
                   </div>
                   <Link href="/campaigns">
-                    <Button variant="outline" size="sm" className="gap-2 border-slate-200 dark:border-slate-600">
+                    <Button variant="outline" size="sm" className="gap-2 border-slate-200">
                       <Eye className="h-4 w-4" />
                       View All
                     </Button>
@@ -291,9 +291,9 @@ export default function ImprovedDashboardPage() {
                 {campaignsLoading ? (
                   <div className="space-y-4">
                     {[1, 2, 3].map((i) => (
-                      <div key={i} className="animate-pulse bg-slate-100 dark:bg-slate-700 rounded-lg p-6">
-                        <div className="h-4 bg-slate-200 dark:bg-slate-600 rounded w-3/4 mb-3"></div>
-                        <div className="h-3 bg-slate-200 dark:bg-slate-600 rounded w-1/2"></div>
+                      <div key={i} className="animate-pulse bg-slate-100 rounded-lg p-6">
+                        <div className="h-4 bg-slate-200 rounded w-3/4 mb-3"></div>
+                        <div className="h-3 bg-slate-200 rounded w-1/2"></div>
                       </div>
                     ))}
                   </div>
@@ -305,12 +305,12 @@ export default function ImprovedDashboardPage() {
                           initial={{ opacity: 0, y: 10 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: index * 0.1 }}
-                          className="p-6 rounded-lg bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors cursor-pointer group"
+                          className="p-6 rounded-lg bg-slate-50 border border-slate-200 hover:bg-slate-100 transition-colors cursor-pointer group"
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex-1">
                               <div className="flex items-center gap-3 mb-3">
-                                <h4 className="font-semibold text-slate-900 dark:text-white text-lg">
+                                <h4 className="font-semibold text-slate-900 text-lg">
                                   {campaign.name}
                                 </h4>
                                 <Badge 
@@ -321,7 +321,7 @@ export default function ImprovedDashboardPage() {
                                   {campaign.status}
                                 </Badge>
                               </div>
-                              <div className="flex items-center gap-6 text-sm text-slate-600 dark:text-slate-400 mb-4">
+                              <div className="flex items-center gap-6 text-sm text-slate-600 mb-4">
                                 <span className="flex items-center gap-2">
                                   <Users className="w-4 h-4" />
                                   {campaign.deliveredCount}/{campaign.totalRecipients} delivered
@@ -332,7 +332,7 @@ export default function ImprovedDashboardPage() {
                                 </span>
                               </div>
                               <div>
-                                <div className="flex justify-between text-sm text-slate-500 dark:text-slate-400 mb-2">
+                                <div className="flex justify-between text-sm text-slate-500 mb-2">
                                   <span>Progress</span>
                                   <span>{Math.round((campaign.deliveredCount / campaign.totalRecipients) * 100)}%</span>
                                 </div>
@@ -342,7 +342,7 @@ export default function ImprovedDashboardPage() {
                                 />
                               </div>
                             </div>
-                            <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300 ml-4" />
+                            <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-slate-600 ml-4" />
                           </div>
                         </motion.div>
                       </Link>
@@ -360,20 +360,20 @@ export default function ImprovedDashboardPage() {
             transition={{ delay: 0.7 }}
             className="xl:col-span-1"
           >
-            <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
+            <Card className="bg-white border-slate-200">
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 rounded-lg bg-purple-100 dark:bg-purple-900/20 flex items-center justify-center">
-                      <Users className="w-6 h-6 text-purple-600 dark:text-purple-400" />
+                    <div className="w-12 h-12 rounded-lg bg-purple-100 flex items-center justify-center">
+                      <Users className="w-6 h-6 text-purple-600" />
                     </div>
                     <div>
-                      <CardTitle className="text-xl text-slate-900 dark:text-white">Recent Customers</CardTitle>
-                      <CardDescription className="text-slate-600 dark:text-slate-400">Latest additions</CardDescription>
+                      <CardTitle className="text-xl text-slate-900">Recent Customers</CardTitle>
+                      <CardDescription className="text-slate-600">Latest additions</CardDescription>
                     </div>
                   </div>
                   <Link href="/customers">
-                    <Button variant="outline" size="sm" className="gap-2 border-slate-200 dark:border-slate-600">
+                    <Button variant="outline" size="sm" className="gap-2 border-slate-200">
                       <Eye className="h-4 w-4" />
                       All
                     </Button>
@@ -384,9 +384,9 @@ export default function ImprovedDashboardPage() {
                 {customersLoading ? (
                   <div className="space-y-4">
                     {[1, 2, 3, 4].map((i) => (
-                      <div key={i} className="animate-pulse bg-slate-100 dark:bg-slate-700 rounded-lg p-4">
-                        <div className="h-4 bg-slate-200 dark:bg-slate-600 rounded w-3/4 mb-2"></div>
-                        <div className="h-3 bg-slate-200 dark:bg-slate-600 rounded w-1/2"></div>
+                      <div key={i} className="animate-pulse bg-slate-100 rounded-lg p-4">
+                        <div className="h-4 bg-slate-200 rounded w-3/4 mb-2"></div>
+                        <div className="h-3 bg-slate-200 rounded w-1/2"></div>
                       </div>
                     ))}
                   </div>
@@ -398,26 +398,26 @@ export default function ImprovedDashboardPage() {
                           initial={{ opacity: 0, x: 10 }}
                           animate={{ opacity: 1, x: 0 }}
                           transition={{ delay: index * 0.05 }}
-                          className="p-4 rounded-lg bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors cursor-pointer group"
+                          className="p-4 rounded-lg bg-slate-50 border border-slate-200 hover:bg-slate-100 transition-colors cursor-pointer group"
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex-1">
-                              <h4 className="font-medium text-slate-900 dark:text-white">
+                              <h4 className="font-medium text-slate-900">
                                 {customer.firstName} {customer.lastName}
                               </h4>
                               <div className="flex items-center gap-2 my-2">
-                                <span className="text-sm text-slate-500 dark:text-slate-400">
+                                <span className="text-sm text-slate-500">
                                   {customer.phoneNumber}
                                 </span>
-                                <Badge variant="outline" className="text-xs h-5 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-600">
+                                <Badge variant="outline" className="text-xs h-5 bg-white border-slate-200">
                                   {customer.status}
                                 </Badge>
                               </div>
-                              <div className="text-sm text-slate-500 dark:text-slate-400">
+                              <div className="text-sm text-slate-500">
                                 {customer.vehicleInterest || 'No preference'}
                               </div>
                             </div>
-                            <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-300" />
+                            <ChevronRight className="w-4 h-4 text-slate-400 group-hover:text-slate-600" />
                           </div>
                         </motion.div>
                       </Link>
@@ -435,15 +435,15 @@ export default function ImprovedDashboardPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
         >
-          <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
+          <Card className="bg-white border-slate-200">
             <CardHeader>
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-lg bg-amber-100 dark:bg-amber-900/20 flex items-center justify-center">
-                  <Zap className="w-6 h-6 text-amber-600 dark:text-amber-400" />
+                <div className="w-12 h-12 rounded-lg bg-amber-100 flex items-center justify-center">
+                  <Zap className="w-6 h-6 text-amber-600" />
                 </div>
                 <div>
-                  <CardTitle className="text-xl text-slate-900 dark:text-white">Quick Actions</CardTitle>
-                  <CardDescription className="text-slate-600 dark:text-slate-400">Streamline your workflow</CardDescription>
+                  <CardTitle className="text-xl text-slate-900">Quick Actions</CardTitle>
+                  <CardDescription className="text-slate-600">Streamline your workflow</CardDescription>
                 </div>
               </div>
             </CardHeader>
@@ -462,15 +462,15 @@ export default function ImprovedDashboardPage() {
                       transition={{ delay: index * 0.05 }}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="p-6 rounded-lg bg-slate-50 dark:bg-slate-700/50 border border-slate-200 dark:border-slate-600 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all duration-200 cursor-pointer group text-center"
+                      className="p-6 rounded-lg bg-slate-50 border border-slate-200 hover:bg-slate-100 transition-all duration-200 cursor-pointer group text-center"
                     >
                       <div className={`w-16 h-16 rounded-xl bg-${action.color}-100 dark:bg-${action.color}-900/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
                         <action.icon className={`w-8 h-8 text-${action.color}-600 dark:text-${action.color}-400`} />
                       </div>
-                      <h3 className="font-semibold text-slate-900 dark:text-white mb-2">
+                      <h3 className="font-semibold text-slate-900 mb-2">
                         {action.title}
                       </h3>
-                      <p className="text-sm text-slate-600 dark:text-slate-400">
+                      <p className="text-sm text-slate-600">
                         {action.desc}
                       </p>
                     </motion.div>

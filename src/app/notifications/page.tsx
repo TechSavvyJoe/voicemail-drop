@@ -102,7 +102,7 @@ export default function NotificationsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-blue-50">
       <AdvancedNavigation />
       
       <main className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-10 py-10">
@@ -123,10 +123,10 @@ export default function NotificationsPage() {
           
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between">
             <div>
-              <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-3">
+              <h1 className="text-4xl font-bold text-slate-900 mb-3">
                 Notifications
               </h1>
-              <p className="text-lg text-slate-600 dark:text-slate-400">
+              <p className="text-lg text-slate-600">
                 Stay updated with your voicemail campaigns and system alerts
               </p>
             </div>
@@ -150,7 +150,7 @@ export default function NotificationsPage() {
           transition={{ delay: 0.1 }}
           className="mb-8"
         >
-          <Card className="bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700">
+          <Card className="bg-white border-2 border-slate-200">
             <CardContent className="p-6">
               <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex-1 relative">
@@ -159,7 +159,7 @@ export default function NotificationsPage() {
                     placeholder="Search notifications..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10 bg-slate-50 dark:bg-slate-700 border-2"
+                    className="pl-10 bg-slate-50 border-2"
                   />
                 </div>
                 <div className="flex gap-2 flex-wrap">
@@ -188,13 +188,13 @@ export default function NotificationsPage() {
           className="space-y-4"
         >
           {filteredNotifications.length === 0 ? (
-            <Card className="bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700">
+            <Card className="bg-white border-2 border-slate-200">
               <CardContent className="p-12 text-center">
                 <Bell className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-slate-900 dark:text-white mb-2">
+                <h3 className="text-lg font-medium text-slate-900 mb-2">
                   No notifications found
                 </h3>
-                <p className="text-slate-600 dark:text-slate-400">
+                <p className="text-slate-600">
                   {searchTerm || filterType !== 'all' 
                     ? 'Try adjusting your search or filter criteria'
                     : 'All caught up! No new notifications at this time.'
@@ -212,10 +212,10 @@ export default function NotificationsPage() {
               >
                 <Card 
                   className={`
-                    bg-white dark:bg-slate-800 border-2 transition-all duration-200 hover:shadow-lg
+                    bg-white border-2 transition-all duration-200 hover:shadow-lg
                     ${!notification.read 
-                      ? 'border-blue-300 dark:border-blue-700 bg-blue-50/50 dark:bg-blue-900/10' 
-                      : 'border-slate-200 dark:border-slate-700'
+                      ? 'border-blue-300 bg-blue-50/50' 
+                      : 'border-slate-200'
                     }
                   `}
                 >
@@ -228,10 +228,10 @@ export default function NotificationsPage() {
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between">
                           <div className="flex-1">
-                            <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+                            <h3 className="text-lg font-semibold text-slate-900 mb-2">
                               {notification.title}
                             </h3>
-                            <p className="text-slate-600 dark:text-slate-400 leading-relaxed">
+                            <p className="text-slate-600 leading-relaxed">
                               {notification.message}
                             </p>
                             <div className="flex items-center gap-3 mt-3">
@@ -245,7 +245,7 @@ export default function NotificationsPage() {
                               >
                                 {notification.type}
                               </Badge>
-                              <span className="text-sm text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                              <span className="text-sm text-slate-500 flex items-center gap-1">
                                 <Clock className="h-3 w-3" />
                                 {notification.time}
                               </span>
@@ -285,10 +285,10 @@ export default function NotificationsPage() {
             transition={{ delay: 0.3 }}
             className="mt-8 text-center"
           >
-            <p className="text-slate-600 dark:text-slate-400">
+            <p className="text-slate-600">
               Showing {filteredNotifications.length} of {notifications.length} notifications
               {unreadCount > 0 && (
-                <span className="ml-2 text-blue-600 dark:text-blue-400 font-medium">
+                <span className="ml-2 text-blue-600 font-medium">
                   ({unreadCount} unread)
                 </span>
               )}

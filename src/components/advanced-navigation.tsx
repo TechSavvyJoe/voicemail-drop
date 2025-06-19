@@ -183,7 +183,7 @@ export function AdvancedNavigation({ className }: AdvancedNavigationProps) {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       className={cn(
-        "sticky top-0 z-50 w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border-b border-slate-200/50 dark:border-slate-700/50",
+        "sticky top-0 z-50 w-full bg-white/80 backdrop-blur-xl border-b border-slate-200/50",
         className
       )}
     >
@@ -194,7 +194,7 @@ export function AdvancedNavigation({ className }: AdvancedNavigationProps) {
             <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
               <Phone className="h-5 w-5 text-white" />
             </div>
-            <span className="text-xl font-bold text-slate-900 dark:text-white">VoiceDrop Pro</span>
+            <span className="text-xl font-bold text-slate-900">VoiceDrop Pro</span>
             {isDemoMode && (
               <Badge variant="outline" className="text-xs bg-blue-50 border-blue-200 text-blue-700">
                 DEMO
@@ -213,8 +213,8 @@ export function AdvancedNavigation({ className }: AdvancedNavigationProps) {
                   className={cn(
                     "flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200",
                     isActive
-                      ? "bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400"
-                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800"
+                      ? "bg-blue-100 text-blue-700"
+                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
                   )}
                 >
                   <item.icon className="h-4 w-4" />
@@ -247,7 +247,7 @@ export function AdvancedNavigation({ className }: AdvancedNavigationProps) {
                       placeholder="Search customers, campaigns..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-10 pr-4 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700"
+                      className="pl-10 pr-4 bg-white border-slate-200"
                       autoFocus
                       onBlur={() => !searchQuery && setIsSearchOpen(false)}
                     />
@@ -258,7 +258,7 @@ export function AdvancedNavigation({ className }: AdvancedNavigationProps) {
                   variant="ghost"
                   size="sm"
                   onClick={() => setIsSearchOpen(true)}
-                  className="hidden md:flex text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800"
+                  className="hidden md:flex text-slate-600 hover:text-slate-900 hover:bg-slate-100"
                 >
                   <Search className="h-4 w-4" />
                 </Button>
@@ -271,7 +271,7 @@ export function AdvancedNavigation({ className }: AdvancedNavigationProps) {
                 <Button 
                   variant="ghost" 
                   size="sm" 
-                  className="relative text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800"
+                  className="relative text-slate-600 hover:text-slate-900 hover:bg-slate-100"
                 >
                   <Bell className="h-4 w-4" />
                   {unreadCount > 0 && (
@@ -285,10 +285,10 @@ export function AdvancedNavigation({ className }: AdvancedNavigationProps) {
                   )}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent align="end" className="w-80 p-0 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
-                <div className="p-4 border-b border-slate-200 dark:border-slate-700">
+              <PopoverContent align="end" className="w-80 p-0 bg-white border-slate-200">
+                <div className="p-4 border-b border-slate-200">
                   <div className="flex items-center justify-between">
-                    <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Notifications</h3>
+                    <h3 className="text-sm font-semibold text-slate-900">Notifications</h3>
                     {unreadCount > 0 && (
                       <Button
                         variant="ghost"
@@ -303,7 +303,7 @@ export function AdvancedNavigation({ className }: AdvancedNavigationProps) {
                 </div>
                 <div className="max-h-80 overflow-y-auto">
                   {notifications.length === 0 ? (
-                    <div className="p-4 text-center text-slate-500 dark:text-slate-400">
+                    <div className="p-4 text-center text-slate-500">
                       <Bell className="w-8 h-8 mx-auto mb-2 opacity-50" />
                       <p className="text-sm">No notifications</p>
                     </div>
@@ -312,21 +312,21 @@ export function AdvancedNavigation({ className }: AdvancedNavigationProps) {
                       <div
                         key={notification.id}
                         className={cn(
-                          "p-4 border-b border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 cursor-pointer transition-colors",
-                          !notification.read && "bg-blue-50/50 dark:bg-blue-900/10"
+                          "p-4 border-b border-slate-100 hover:bg-slate-50 cursor-pointer transition-colors",
+                          !notification.read && "bg-blue-50/50"
                         )}
                         onClick={() => markNotificationAsRead(notification.id)}
                       >
                         <div className="flex items-start space-x-3">
                           {getNotificationIcon(notification.type)}
                           <div className="flex-1 min-w-0">
-                            <p className="text-sm font-medium text-slate-900 dark:text-white">
+                            <p className="text-sm font-medium text-slate-900">
                               {notification.title}
                             </p>
-                            <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                            <p className="text-sm text-slate-600 mt-1">
                               {notification.message}
                             </p>
-                            <p className="text-xs text-slate-500 dark:text-slate-500 mt-2">
+                            <p className="text-xs text-slate-500 mt-2">
                               {notification.time}
                             </p>
                           </div>
@@ -338,10 +338,10 @@ export function AdvancedNavigation({ className }: AdvancedNavigationProps) {
                     ))
                   )}
                 </div>
-                <div className="p-3 border-t border-slate-200 dark:border-slate-700">
+                <div className="p-3 border-t border-slate-200">
                   <Link
                     href="/notifications"
-                    className="block text-center text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300"
+                    className="block text-center text-sm text-blue-600 hover:text-blue-700"
                     onClick={() => setIsNotificationsOpen(false)}
                   >
                     View all notifications
@@ -353,7 +353,7 @@ export function AdvancedNavigation({ className }: AdvancedNavigationProps) {
             {/* User Menu */}
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center space-x-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800">
+                <Button variant="ghost" className="flex items-center space-x-2 text-slate-600 hover:text-slate-900 hover:bg-slate-100">
                   <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-blue-700 rounded-full flex items-center justify-center text-white font-medium text-sm">
                     {demoUser.firstName.charAt(0)}{demoUser.lastName.charAt(0)}
                   </div>
@@ -361,12 +361,12 @@ export function AdvancedNavigation({ className }: AdvancedNavigationProps) {
                   <ChevronDown className="h-3 w-3" />
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-64 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
+              <DropdownMenuContent align="end" className="w-64 bg-white border-slate-200">
                 <DropdownMenuLabel className="pb-2">
                   <div>
-                    <p className="font-medium text-slate-900 dark:text-white">{demoUser.firstName} {demoUser.lastName}</p>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">{demoUser.email}</p>
-                    <p className="text-xs text-slate-400 dark:text-slate-500">{demoUser.company}</p>
+                    <p className="font-medium text-slate-900">{demoUser.firstName} {demoUser.lastName}</p>
+                    <p className="text-sm text-slate-500">{demoUser.email}</p>
+                    <p className="text-xs text-slate-400">{demoUser.company}</p>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
@@ -434,7 +434,7 @@ export function AdvancedNavigation({ className }: AdvancedNavigationProps) {
                 
                 <DropdownMenuSeparator />
                 
-                <DropdownMenuItem className="cursor-pointer text-red-600 dark:text-red-400">
+                <DropdownMenuItem className="cursor-pointer text-red-600">
                   <LogOut className="mr-3 h-4 w-4" />
                   <span>Sign out</span>
                 </DropdownMenuItem>
@@ -445,7 +445,7 @@ export function AdvancedNavigation({ className }: AdvancedNavigationProps) {
             <Button
               variant="ghost"
               size="sm"
-              className="md:hidden text-slate-600 hover:text-slate-900 hover:bg-slate-100 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-800"
+              className="md:hidden text-slate-600 hover:text-slate-900 hover:bg-slate-100"
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             >
               {isMobileMenuOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
@@ -461,7 +461,7 @@ export function AdvancedNavigation({ className }: AdvancedNavigationProps) {
               animate={{ height: 'auto', opacity: 1 }}
               exit={{ height: 0, opacity: 0 }}
               transition={{ duration: 0.3 }}
-              className="md:hidden overflow-hidden bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700"
+              className="md:hidden overflow-hidden bg-white border-t border-slate-200"
             >
               <div className="py-4 space-y-1">
                 {navigationItems.map((item) => {
@@ -474,8 +474,8 @@ export function AdvancedNavigation({ className }: AdvancedNavigationProps) {
                       className={cn(
                         "flex items-center space-x-3 px-4 py-3 text-sm font-medium transition-colors",
                         isActive
-                          ? "bg-blue-100 text-blue-700 dark:bg-blue-900/20 dark:text-blue-400"
-                          : "text-slate-600 hover:text-slate-900 hover:bg-slate-50 dark:text-slate-300 dark:hover:text-white dark:hover:bg-slate-700"
+                          ? "bg-blue-100 text-blue-700"
+                          : "text-slate-600 hover:text-slate-900 hover:bg-slate-50"
                       )}
                     >
                       <item.icon className="h-4 w-4" />
@@ -497,7 +497,7 @@ export function AdvancedNavigation({ className }: AdvancedNavigationProps) {
                       placeholder="Search..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-10 bg-slate-50 dark:bg-slate-700 border-slate-200 dark:border-slate-600"
+                      className="pl-10 bg-slate-50 border-slate-200"
                     />
                   </div>
                 </form>

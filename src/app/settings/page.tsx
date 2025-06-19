@@ -5,8 +5,7 @@ import { motion } from 'framer-motion'
 import { 
   Settings, User, Bell, Shield, Palette, Database,
   Save, Check, Phone, Mail,
-  Download, Upload, Trash2, RefreshCw,
-  Moon, Sun, Monitor
+  Download, Upload, Trash2, RefreshCw
 } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -33,7 +32,6 @@ interface UserSettings {
     weeklyReport: boolean
   }
   preferences: {
-    theme: 'light' | 'dark' | 'system'
     language: string
     dateFormat: string
     voiceSpeed: number
@@ -70,7 +68,6 @@ export default function SettingsPage() {
       weeklyReport: false
     },
     preferences: {
-      theme: 'light',
       language: 'en-US',
       dateFormat: 'MM/DD/YYYY',
       voiceSpeed: 1.0,
@@ -379,32 +376,6 @@ export default function SettingsPage() {
                     </CardDescription>
                   </CardHeader>
                   <CardContent className="space-y-6">
-                    <div>
-                      <label className="block text-sm font-bold text-gray-700 mb-3">
-                        Theme Preference
-                      </label>
-                      <div className="grid grid-cols-3 gap-3">
-                        {[
-                          { value: 'light', label: 'Light', icon: Sun },
-                          { value: 'dark', label: 'Dark', icon: Moon },
-                          { value: 'system', label: 'System', icon: Monitor }
-                        ].map((theme) => (
-                          <button
-                            key={theme.value}
-                            onClick={() => handleSettingChange('preferences', 'theme', theme.value)}
-                            className={`flex flex-col items-center gap-2 p-4 border rounded-xl transition-all duration-200 ${
-                              settings.preferences.theme === theme.value
-                                ? 'border-blue-500 bg-gradient-to-br from-blue-50/80 to-indigo-50/80 text-blue-700 shadow-lg'
-                                : 'border-white/20 hover:border-gray-400 bg-white/40 backdrop-blur-sm hover:bg-white/60'
-                            }`}
-                          >
-                            <theme.icon className="h-5 w-5" />
-                            <span className="text-sm font-bold">{theme.label}</span>
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <div>
                         <label className="block text-sm font-bold text-gray-700 mb-2">

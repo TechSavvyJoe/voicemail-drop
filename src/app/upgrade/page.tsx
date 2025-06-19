@@ -99,7 +99,7 @@ export default function UpgradePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-blue-50">
       <AdvancedNavigation />
       
       <main className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10 py-10">
@@ -118,17 +118,17 @@ export default function UpgradePage() {
             </Link>
           </div>
           
-          <h1 className="text-5xl font-bold text-slate-900 dark:text-white mb-4">
+          <h1 className="text-5xl font-bold text-slate-900 mb-4">
             Choose Your Plan
           </h1>
-          <p className="text-xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto">
+          <p className="text-xl text-slate-600 max-w-3xl mx-auto">
             Scale your voicemail campaigns with the right plan for your business. 
             Upgrade or downgrade at any time with no long-term commitments.
           </p>
           
           {/* Billing Toggle */}
           <div className="flex items-center justify-center gap-4 mt-8">
-            <span className={`text-sm ${billingCycle === 'monthly' ? 'text-slate-900 dark:text-white font-medium' : 'text-slate-500'}`}>
+            <span className={`text-sm ${billingCycle === 'monthly' ? 'text-slate-900 font-medium' : 'text-slate-500'}`}>
               Monthly
             </span>
             <button
@@ -141,7 +141,7 @@ export default function UpgradePage() {
                 billingCycle === 'annual' ? 'translate-x-8' : 'translate-x-1'
               }`} />
             </button>
-            <span className={`text-sm ${billingCycle === 'annual' ? 'text-slate-900 dark:text-white font-medium' : 'text-slate-500'}`}>
+            <span className={`text-sm ${billingCycle === 'annual' ? 'text-slate-900 font-medium' : 'text-slate-500'}`}>
               Annual
             </span>
             {billingCycle === 'annual' && (
@@ -162,10 +162,10 @@ export default function UpgradePage() {
           {plans.map((plan) => (
             <Card 
               key={plan.name}
-              className={`relative bg-white dark:bg-slate-800 border-2 transition-all duration-200 hover:shadow-xl ${
+              className={`relative bg-white border-2 transition-all duration-200 hover:shadow-xl ${
                 plan.popular 
-                  ? 'border-blue-500 dark:border-blue-400 shadow-lg scale-105' 
-                  : 'border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-600'
+                  ? 'border-blue-500 shadow-lg scale-105' 
+                  : 'border-slate-200 hover:border-blue-300'
               }`}
             >
               {plan.popular && (
@@ -186,21 +186,21 @@ export default function UpgradePage() {
               )}
               
               <CardHeader className="text-center pb-2">
-                <CardTitle className="text-2xl font-bold text-slate-900 dark:text-white">
+                <CardTitle className="text-2xl font-bold text-slate-900">
                   {plan.name}
                 </CardTitle>
-                <p className="text-slate-600 dark:text-slate-400 mt-2">
+                <p className="text-slate-600 mt-2">
                   {plan.description}
                 </p>
                 <div className="mt-4">
-                  <span className="text-4xl font-bold text-slate-900 dark:text-white">
+                  <span className="text-4xl font-bold text-slate-900">
                     ${getPrice(plan.price)}
                   </span>
-                  <span className="text-slate-600 dark:text-slate-400">
+                  <span className="text-slate-600">
                     /{billingCycle === 'monthly' ? 'month' : 'year'}
                   </span>
                   {billingCycle === 'annual' && plan.price !== getPrice(plan.price) && (
-                    <div className="text-sm text-emerald-600 dark:text-emerald-400 mt-1">
+                    <div className="text-sm text-emerald-600 mt-1">
                       Save ${(plan.price - getPrice(plan.price)) * 12}/year
                     </div>
                   )}
@@ -212,7 +212,7 @@ export default function UpgradePage() {
                   {plan.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-start gap-3">
                       <Check className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" />
-                      <span className="text-slate-700 dark:text-slate-300">{feature}</span>
+                      <span className="text-slate-700">{feature}</span>
                     </li>
                   ))}
                 </ul>
@@ -223,7 +223,7 @@ export default function UpgradePage() {
                       ? 'bg-slate-600 hover:bg-slate-700' 
                       : plan.popular 
                         ? 'bg-blue-600 hover:bg-blue-700' 
-                        : 'bg-slate-900 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100'
+                        : 'bg-slate-900 hover:bg-slate-800'
                   } text-white ${plan.current ? 'cursor-default' : ''}`}
                   disabled={plan.current}
                 >
@@ -254,61 +254,61 @@ export default function UpgradePage() {
           transition={{ delay: 0.2 }}
           className="mb-16"
         >
-          <Card className="bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700">
+          <Card className="bg-white border-2 border-slate-200">
             <CardHeader className="text-center">
-              <CardTitle className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
+              <CardTitle className="text-2xl font-bold text-slate-900 mb-2">
                 Why Upgrade?
               </CardTitle>
-              <p className="text-slate-600 dark:text-slate-400">
+              <p className="text-slate-600">
                 Unlock powerful features to scale your voicemail campaigns
               </p>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/20 rounded-xl flex items-center justify-center mx-auto mb-4">
-                    <Phone className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+                  <div className="w-16 h-16 bg-blue-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <Phone className="w-8 h-8 text-blue-600" />
                   </div>
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">
                     Higher Volume
                   </h3>
-                  <p className="text-slate-600 dark:text-slate-400">
+                  <p className="text-slate-600">
                     Send more voicemails per month with better pricing per message
                   </p>
                 </div>
                 
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/20 rounded-xl flex items-center justify-center mx-auto mb-4">
-                    <BarChart3 className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
+                  <div className="w-16 h-16 bg-emerald-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <BarChart3 className="w-8 h-8 text-emerald-600" />
                   </div>
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">
                     Advanced Analytics
                   </h3>
-                  <p className="text-slate-600 dark:text-slate-400">
+                  <p className="text-slate-600">
                     Detailed insights and reporting to optimize your campaigns
                   </p>
                 </div>
                 
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-purple-100 dark:bg-purple-900/20 rounded-xl flex items-center justify-center mx-auto mb-4">
-                    <Clock className="w-8 h-8 text-purple-600 dark:text-purple-400" />
+                  <div className="w-16 h-16 bg-purple-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <Clock className="w-8 h-8 text-purple-600" />
                   </div>
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">
                     Scheduled Delivery
                   </h3>
-                  <p className="text-slate-600 dark:text-slate-400">
+                  <p className="text-slate-600">
                     Schedule campaigns for optimal delivery times
                   </p>
                 </div>
                 
                 <div className="text-center">
-                  <div className="w-16 h-16 bg-amber-100 dark:bg-amber-900/20 rounded-xl flex items-center justify-center mx-auto mb-4">
-                    <Headphones className="w-8 h-8 text-amber-600 dark:text-amber-400" />
+                  <div className="w-16 h-16 bg-amber-100 rounded-xl flex items-center justify-center mx-auto mb-4">
+                    <Headphones className="w-8 h-8 text-amber-600" />
                   </div>
-                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+                  <h3 className="text-lg font-semibold text-slate-900 mb-2">
                     Priority Support
                   </h3>
-                  <p className="text-slate-600 dark:text-slate-400">
+                  <p className="text-slate-600">
                     Get faster responses and dedicated assistance
                   </p>
                 </div>
@@ -323,21 +323,21 @@ export default function UpgradePage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
         >
-          <Card className="bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700">
+          <Card className="bg-white border-2 border-slate-200">
             <CardHeader className="text-center">
-              <CardTitle className="text-2xl font-bold text-slate-900 dark:text-white">
+              <CardTitle className="text-2xl font-bold text-slate-900">
                 Frequently Asked Questions
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {faqs.map((faq, index) => (
-                  <div key={index} className="border-b border-slate-200 dark:border-slate-700 pb-4">
+                  <div key={index} className="border-b border-slate-200 pb-4">
                     <button
                       onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
                       className="flex items-center justify-between w-full text-left"
                     >
-                      <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
+                      <h3 className="text-lg font-semibold text-slate-900">
                         {faq.question}
                       </h3>
                       <ArrowRight 
@@ -347,7 +347,7 @@ export default function UpgradePage() {
                       />
                     </button>
                     {expandedFaq === index && (
-                      <p className="mt-3 text-slate-600 dark:text-slate-400 leading-relaxed">
+                      <p className="mt-3 text-slate-600 leading-relaxed">
                         {faq.answer}
                       </p>
                     )}

@@ -110,7 +110,7 @@ export default function SecurityPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-slate-100 dark:from-slate-900 dark:via-slate-900 dark:to-slate-800">
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/20 to-slate-100">
       <AdvancedNavigation />
       
       <div className="container mx-auto px-6 py-8 max-w-6xl">
@@ -121,10 +121,10 @@ export default function SecurityPage() {
         >
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
+              <h1 className="text-3xl font-bold text-slate-900 mb-2">
                 Security Settings
               </h1>
-              <p className="text-slate-600 dark:text-slate-300">
+              <p className="text-slate-600">
                 Manage your account security and privacy settings
               </p>
             </div>
@@ -138,7 +138,7 @@ export default function SecurityPage() {
         </motion.div>
 
         <Tabs defaultValue="password" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-4 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+          <TabsList className="grid w-full grid-cols-4 bg-white border border-slate-200">
             <TabsTrigger value="password" className="flex items-center gap-2">
               <Key className="w-4 h-4" />
               Password
@@ -165,7 +165,7 @@ export default function SecurityPage() {
               className="grid grid-cols-1 lg:grid-cols-3 gap-8"
             >
               <div className="lg:col-span-2">
-                <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-slate-200 dark:border-slate-700">
+                <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
                   <CardHeader>
                     <CardTitle className="flex items-center gap-2">
                       <Lock className="w-5 h-5" />
@@ -184,7 +184,7 @@ export default function SecurityPage() {
                           type={showCurrentPassword ? "text" : "password"}
                           value={passwordData.currentPassword}
                           onChange={(e) => handlePasswordChange('currentPassword', e.target.value)}
-                          className="pr-10 bg-white dark:bg-slate-700"
+                          className="pr-10 bg-white"
                         />
                         <Button
                           type="button"
@@ -206,7 +206,7 @@ export default function SecurityPage() {
                           type={showNewPassword ? "text" : "password"}
                           value={passwordData.newPassword}
                           onChange={(e) => handlePasswordChange('newPassword', e.target.value)}
-                          className="pr-10 bg-white dark:bg-slate-700"
+                          className="pr-10 bg-white"
                         />
                         <Button
                           type="button"
@@ -228,7 +228,7 @@ export default function SecurityPage() {
                           type={showConfirmPassword ? "text" : "password"}
                           value={passwordData.confirmPassword}
                           onChange={(e) => handlePasswordChange('confirmPassword', e.target.value)}
-                          className="pr-10 bg-white dark:bg-slate-700"
+                          className="pr-10 bg-white"
                         />
                         <Button
                           type="button"
@@ -251,7 +251,7 @@ export default function SecurityPage() {
               </div>
 
               <div>
-                <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-slate-200 dark:border-slate-700">
+                <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
                   <CardHeader>
                     <CardTitle className="text-lg">Password Requirements</CardTitle>
                   </CardHeader>
@@ -291,7 +291,7 @@ export default function SecurityPage() {
               animate={{ opacity: 1, y: 0 }}
               className="grid grid-cols-1 lg:grid-cols-2 gap-8"
             >
-              <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-slate-200 dark:border-slate-700">
+              <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Shield className="w-5 h-5" />
@@ -305,7 +305,7 @@ export default function SecurityPage() {
                   <div className="flex items-center justify-between">
                     <div>
                       <Label htmlFor="two-factor">Enable Two-Factor Authentication</Label>
-                      <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                      <p className="text-sm text-slate-600 mt-1">
                         Require a verification code in addition to your password
                       </p>
                     </div>
@@ -317,14 +317,14 @@ export default function SecurityPage() {
                   </div>
 
                   {twoFactorEnabled && (
-                    <div className="p-4 bg-emerald-50 dark:bg-emerald-900/20 border border-emerald-200 dark:border-emerald-800 rounded-lg">
+                    <div className="p-4 bg-emerald-50 border border-emerald-200 rounded-lg">
                       <div className="flex items-center gap-2 mb-2">
                         <CheckCircle className="w-4 h-4 text-emerald-600" />
-                        <span className="text-sm font-medium text-emerald-800 dark:text-emerald-200">
+                        <span className="text-sm font-medium text-emerald-800">
                           Two-Factor Authentication is enabled
                         </span>
                       </div>
-                      <p className="text-sm text-emerald-700 dark:text-emerald-300">
+                      <p className="text-sm text-emerald-700">
                         Your account is protected with authenticator app verification.
                       </p>
                     </div>
@@ -343,7 +343,7 @@ export default function SecurityPage() {
                 </CardContent>
               </Card>
 
-              <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-slate-200 dark:border-slate-700">
+              <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
                 <CardHeader>
                   <CardTitle>Notification Preferences</CardTitle>
                   <CardDescription>
@@ -354,7 +354,7 @@ export default function SecurityPage() {
                   <div className="flex items-center justify-between">
                     <div>
                       <Label htmlFor="email-notifications">Email Notifications</Label>
-                      <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                      <p className="text-sm text-slate-600 mt-1">
                         Receive security alerts via email
                       </p>
                     </div>
@@ -368,7 +368,7 @@ export default function SecurityPage() {
                   <div className="flex items-center justify-between">
                     <div>
                       <Label htmlFor="login-notifications">Login Notifications</Label>
-                      <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">
+                      <p className="text-sm text-slate-600 mt-1">
                         Get notified of new login attempts
                       </p>
                     </div>
@@ -389,7 +389,7 @@ export default function SecurityPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-slate-200 dark:border-slate-700">
+              <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div>
@@ -409,32 +409,32 @@ export default function SecurityPage() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-4">
-                    <div className="p-4 border border-slate-200 dark:border-slate-600 rounded-lg bg-emerald-50/50 dark:bg-emerald-900/10">
+                    <div className="p-4 border border-slate-200 rounded-lg bg-emerald-50/50">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-emerald-100 dark:bg-emerald-900/20 rounded-lg flex items-center justify-center">
+                          <div className="w-10 h-10 bg-emerald-100 rounded-lg flex items-center justify-center">
                             <Smartphone className="w-5 h-5 text-emerald-600" />
                           </div>
                           <div>
-                            <h4 className="font-medium text-slate-900 dark:text-white">Current Session</h4>
-                            <p className="text-sm text-slate-600 dark:text-slate-400">Chrome on macOS</p>
-                            <p className="text-xs text-slate-500 dark:text-slate-500">San Francisco, CA • Active now</p>
+                            <h4 className="font-medium text-slate-900">Current Session</h4>
+                            <p className="text-sm text-slate-600">Chrome on macOS</p>
+                            <p className="text-xs text-slate-500">San Francisco, CA • Active now</p>
                           </div>
                         </div>
                         <Badge className="bg-emerald-100 text-emerald-800">Current</Badge>
                       </div>
                     </div>
 
-                    <div className="p-4 border border-slate-200 dark:border-slate-600 rounded-lg">
+                    <div className="p-4 border border-slate-200 rounded-lg">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center">
+                          <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
                             <Smartphone className="w-5 h-5 text-blue-600" />
                           </div>
                           <div>
-                            <h4 className="font-medium text-slate-900 dark:text-white">Safari on iPhone</h4>
-                            <p className="text-sm text-slate-600 dark:text-slate-400">Mobile Session</p>
-                            <p className="text-xs text-slate-500 dark:text-slate-500">San Francisco, CA • 2 hours ago</p>
+                            <h4 className="font-medium text-slate-900">Safari on iPhone</h4>
+                            <p className="text-sm text-slate-600">Mobile Session</p>
+                            <p className="text-xs text-slate-500">San Francisco, CA • 2 hours ago</p>
                           </div>
                         </div>
                         <Button variant="outline" size="sm">
@@ -443,16 +443,16 @@ export default function SecurityPage() {
                       </div>
                     </div>
 
-                    <div className="p-4 border border-slate-200 dark:border-slate-600 rounded-lg">
+                    <div className="p-4 border border-slate-200 rounded-lg">
                       <div className="flex items-center justify-between">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 bg-purple-100 dark:bg-purple-900/20 rounded-lg flex items-center justify-center">
+                          <div className="w-10 h-10 bg-purple-100 rounded-lg flex items-center justify-center">
                             <Smartphone className="w-5 h-5 text-purple-600" />
                           </div>
                           <div>
-                            <h4 className="font-medium text-slate-900 dark:text-white">Firefox on Windows</h4>
-                            <p className="text-sm text-slate-600 dark:text-slate-400">Desktop Session</p>
-                            <p className="text-xs text-slate-500 dark:text-slate-500">San Francisco, CA • 1 day ago</p>
+                            <h4 className="font-medium text-slate-900">Firefox on Windows</h4>
+                            <p className="text-sm text-slate-600">Desktop Session</p>
+                            <p className="text-xs text-slate-500">San Francisco, CA • 1 day ago</p>
                           </div>
                         </div>
                         <Button variant="outline" size="sm">
@@ -462,7 +462,7 @@ export default function SecurityPage() {
                     </div>
                   </div>
 
-                  <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-700">
+                  <div className="mt-6 pt-6 border-t border-slate-200">
                     <Button variant="destructive" className="w-full">
                       Revoke All Other Sessions
                     </Button>
@@ -478,7 +478,7 @@ export default function SecurityPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              <Card className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm border-slate-200 dark:border-slate-700">
+              <Card className="bg-white/80 backdrop-blur-sm border-slate-200">
                 <CardHeader>
                   <div className="flex items-center justify-between">
                     <div>
@@ -501,17 +501,17 @@ export default function SecurityPage() {
                     {demoSecurityEvents.map((event) => (
                       <div
                         key={event.id}
-                        className="flex items-center gap-4 p-4 border border-slate-200 dark:border-slate-600 rounded-lg"
+                        className="flex items-center gap-4 p-4 border border-slate-200 rounded-lg"
                       >
                         {getEventIcon(event.type, event.status)}
                         <div className="flex-1">
                           <div className="flex items-center justify-between mb-1">
-                            <h4 className="font-medium text-slate-900 dark:text-white">{event.description}</h4>
-                            <span className="text-sm text-slate-500 dark:text-slate-500">
+                            <h4 className="font-medium text-slate-900">{event.description}</h4>
+                            <span className="text-sm text-slate-500">
                               {formatTimestamp(event.timestamp)}
                             </span>
                           </div>
-                          <div className="flex items-center gap-4 text-sm text-slate-600 dark:text-slate-400">
+                          <div className="flex items-center gap-4 text-sm text-slate-600">
                             <span>{event.device}</span>
                             <span>•</span>
                             <span>{event.location}</span>

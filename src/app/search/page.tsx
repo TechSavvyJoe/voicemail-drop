@@ -114,7 +114,7 @@ const mockResults: SearchResults = {
 export default function SearchPage() {
   return (
     <Suspense fallback={
-      <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+      <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-blue-50">
         <AdvancedNavigation />
         <div className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-10 py-10">
           <div className="flex items-center justify-center min-h-[400px]">
@@ -206,7 +206,7 @@ function SearchContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-blue-50">
       <AdvancedNavigation />
       
       <main className="max-w-4xl mx-auto px-6 sm:px-8 lg:px-10 py-10">
@@ -225,7 +225,7 @@ function SearchContent() {
             </Link>
           </div>
           
-          <h1 className="text-4xl font-bold text-slate-900 dark:text-white mb-4">
+          <h1 className="text-4xl font-bold text-slate-900 mb-4">
             Search Results
           </h1>
           
@@ -237,7 +237,7 @@ function SearchContent() {
                 placeholder="Search campaigns, customers, or documentation..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-12 pr-4 py-4 text-lg bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 focus:border-blue-500 dark:focus:border-blue-400 rounded-xl"
+                className="pl-12 pr-4 py-4 text-lg bg-white border-2 border-slate-200 focus:border-blue-500 rounded-xl"
               />
               <Button 
                 type="submit"
@@ -252,7 +252,7 @@ function SearchContent() {
           {/* Results Summary */}
           {getTotalResults() > 0 && (
             <div className="flex items-center justify-between">
-              <p className="text-slate-600 dark:text-slate-400">
+              <p className="text-slate-600">
                 Found {getTotalResults()} results for &quot;{searchQuery}&quot;
               </p>
               
@@ -282,7 +282,7 @@ function SearchContent() {
             className="text-center py-12"
           >
             <div className="animate-spin w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full mx-auto mb-4"></div>
-            <p className="text-slate-600 dark:text-slate-400">Searching...</p>
+            <p className="text-slate-600">Searching...</p>
           </motion.div>
         )}
 
@@ -293,16 +293,16 @@ function SearchContent() {
             animate={{ opacity: 1, y: 0 }}
             className="text-center py-12"
           >
-            <Card className="bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700">
+            <Card className="bg-white border-2 border-slate-200">
               <CardContent className="p-12">
                 <Search className="w-16 h-16 text-slate-400 mx-auto mb-4" />
-                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
+                <h3 className="text-xl font-semibold text-slate-900 mb-2">
                   No results found
                 </h3>
-                <p className="text-slate-600 dark:text-slate-400 mb-4">
+                <p className="text-slate-600 mb-4">
                   We couldn&apos;t find anything matching &quot;{searchQuery}&quot;. Try:
                 </p>
-                <ul className="text-slate-600 dark:text-slate-400 text-left max-w-md mx-auto space-y-1">
+                <ul className="text-slate-600 text-left max-w-md mx-auto space-y-1">
                   <li>• Checking your spelling</li>
                   <li>• Using different keywords</li>
                   <li>• Searching for broader terms</li>
@@ -324,16 +324,16 @@ function SearchContent() {
               
               return (
                 <div key={category}>
-                  <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-4 capitalize flex items-center gap-3">
+                  <h2 className="text-2xl font-bold text-slate-900 mb-4 capitalize flex items-center gap-3">
                     {category === 'docs' ? (
                       <>
-                        <FileText className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                        <FileText className="w-6 h-6 text-blue-600" />
                         Documentation
                       </>
                     ) : (
                       <>
-                        {category === 'campaigns' && <Phone className="w-6 h-6 text-blue-600 dark:text-blue-400" />}
-                        {category === 'customers' && <Users className="w-6 h-6 text-blue-600 dark:text-blue-400" />}
+                        {category === 'campaigns' && <Phone className="w-6 h-6 text-blue-600" />}
+                        {category === 'customers' && <Users className="w-6 h-6 text-blue-600" />}
                         {category}
                       </>
                     )}
@@ -349,29 +349,29 @@ function SearchContent() {
                       return (
                         <Card 
                           key={item.id}
-                          className="bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-600 transition-all duration-200 hover:shadow-lg group"
+                          className="bg-white border-2 border-slate-200 hover:border-blue-300 transition-all duration-200 hover:shadow-lg group"
                         >
                           <CardContent className="p-6">
                             <div className="flex items-start gap-4">
-                              <div className="w-10 h-10 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                                <Icon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                              <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <Icon className="w-5 h-5 text-blue-600" />
                               </div>
                               
                               <div className="flex-1 min-w-0">
                                 <div className="flex items-start justify-between">
                                   <div className="flex-1">
-                                    <h3 className="text-lg font-semibold text-slate-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                    <h3 className="text-lg font-semibold text-slate-900 group-hover:text-blue-600 transition-colors">
                                       {getItemTitle(item)}
                                     </h3>
                                     
                                     {'description' in item && item.description && (
-                                      <p className="text-slate-600 dark:text-slate-400 mt-1">
+                                      <p className="text-slate-600 mt-1">
                                         {item.description}
                                       </p>
                                     )}
                                     
                                     {'email' in item && item.email && (
-                                      <p className="text-slate-600 dark:text-slate-400 mt-1">
+                                      <p className="text-slate-600 mt-1">
                                         {item.email}
                                       </p>
                                     )}
@@ -397,27 +397,27 @@ function SearchContent() {
                                       )}
                                       
                                       {'readTime' in item && item.readTime && (
-                                        <span className="text-sm text-slate-500 dark:text-slate-400 flex items-center gap-1">
+                                        <span className="text-sm text-slate-500 flex items-center gap-1">
                                           <Clock className="w-3 h-3" />
                                           {item.readTime}
                                         </span>
                                       )}
                                       
                                       {'delivered_count' in item && item.delivered_count && (
-                                        <span className="text-sm text-slate-500 dark:text-slate-400">
+                                        <span className="text-sm text-slate-500">
                                           {item.delivered_count} delivered
                                         </span>
                                       )}
                                       
                                       {'phoneNumber' in item && item.phoneNumber && (
-                                        <span className="text-sm text-slate-500 dark:text-slate-400">
+                                        <span className="text-sm text-slate-500">
                                           {item.phoneNumber}
                                         </span>
                                       )}
                                     </div>
                                   </div>
                                   
-                                  <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors ml-4" />
+                                  <ChevronRight className="w-5 h-5 text-slate-400 group-hover:text-blue-600 transition-colors ml-4" />
                                 </div>
                               </div>
                             </div>
@@ -439,30 +439,30 @@ function SearchContent() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
           >
-            <Card className="bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700">
+            <Card className="bg-white border-2 border-slate-200">
               <CardHeader>
-                <CardTitle className="text-xl font-bold text-slate-900 dark:text-white flex items-center gap-3">
-                  <Search className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                <CardTitle className="text-xl font-bold text-slate-900 flex items-center gap-3">
+                  <Search className="w-5 h-5 text-blue-600" />
                   Search Tips
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <div>
-                    <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Campaigns</h3>
-                    <p className="text-slate-600 dark:text-slate-400 text-sm">
+                    <h3 className="font-semibold text-slate-900 mb-2">Campaigns</h3>
+                    <p className="text-slate-600 text-sm">
                       Search by campaign name, status, or description to find specific voicemail campaigns
                     </p>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Customers</h3>
-                    <p className="text-slate-600 dark:text-slate-400 text-sm">
+                    <h3 className="font-semibold text-slate-900 mb-2">Customers</h3>
+                    <p className="text-slate-600 text-sm">
                       Find customers by name, email, or phone number across your contact lists
                     </p>
                   </div>
                   <div>
-                    <h3 className="font-semibold text-slate-900 dark:text-white mb-2">Documentation</h3>
-                    <p className="text-slate-600 dark:text-slate-400 text-sm">
+                    <h3 className="font-semibold text-slate-900 mb-2">Documentation</h3>
+                    <p className="text-slate-600 text-sm">
                       Search help articles, guides, and API documentation by topic or keyword
                     </p>
                   </div>

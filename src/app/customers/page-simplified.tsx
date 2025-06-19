@@ -126,11 +126,11 @@ export default function SimplifiedCustomersPage() {
   // Show loading state
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+      <div className="min-h-screen bg-slate-50">
         <FunctionalNavigation />
         <div className="max-w-7xl mx-auto px-6 py-8">
           <div className="flex items-center justify-center min-h-[400px]">
-            <div className="flex items-center gap-3 text-slate-600 dark:text-slate-400">
+            <div className="flex items-center gap-3 text-slate-600">
               <Loader2 className="h-6 w-6 animate-spin" />
               <span className="text-lg">Loading customers...</span>
             </div>
@@ -143,15 +143,15 @@ export default function SimplifiedCustomersPage() {
   // Show error state
   if (isError) {
     return (
-      <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+      <div className="min-h-screen bg-slate-50">
         <FunctionalNavigation />
         <div className="max-w-7xl mx-auto px-6 py-8">
           <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
             <AlertCircle className="h-12 w-12 text-red-500 mb-4" />
-            <h2 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
+            <h2 className="text-xl font-semibold text-slate-900 mb-2">
               Error Loading Customers
             </h2>
-            <p className="text-slate-600 dark:text-slate-400 mb-4">
+            <p className="text-slate-600 mb-4">
               Something went wrong. Please try again.
             </p>
             <Button onClick={() => window.location.reload()}>
@@ -164,7 +164,7 @@ export default function SimplifiedCustomersPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <div className="min-h-screen bg-slate-50">
       <FunctionalNavigation />
       
       <div className="max-w-7xl mx-auto px-6 py-8">
@@ -176,16 +176,16 @@ export default function SimplifiedCustomersPage() {
         >
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
             <div>
-              <h1 className="text-3xl font-bold text-slate-900 dark:text-white mb-2">
+              <h1 className="text-3xl font-bold text-slate-900 mb-2">
                 Customer Management
               </h1>
-              <p className="text-lg text-slate-600 dark:text-slate-400">
+              <p className="text-lg text-slate-600">
                 Manage your customer database and contact information
               </p>
             </div>
             <div className="flex gap-3">
               <Link href="/customers/upload">
-                <Button variant="outline" className="border-slate-200 dark:border-slate-600">
+                <Button variant="outline" className="border-slate-200">
                   <Upload className="h-4 w-4 mr-2" />
                   Import CSV
                 </Button>
@@ -201,71 +201,71 @@ export default function SimplifiedCustomersPage() {
 
           {/* Stats Cards */}
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4 mb-8">
-            <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
+            <Card className="bg-white border-slate-200">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-slate-600 dark:text-slate-400">Total</p>
-                    <p className="text-2xl font-bold text-slate-900 dark:text-white">{stats.total}</p>
+                    <p className="text-sm font-medium text-slate-600">Total</p>
+                    <p className="text-2xl font-bold text-slate-900">{stats.total}</p>
                   </div>
-                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center">
-                    <Users className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <Users className="w-6 h-6 text-blue-600" />
                   </div>
                 </div>
               </CardContent>
             </Card>
             
-            <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
+            <Card className="bg-white border-slate-200">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-slate-600 dark:text-slate-400">Leads</p>
-                    <p className="text-2xl font-bold text-slate-900 dark:text-white">{stats.leads}</p>
+                    <p className="text-sm font-medium text-slate-600">Leads</p>
+                    <p className="text-2xl font-bold text-slate-900">{stats.leads}</p>
                   </div>
-                  <div className="w-12 h-12 bg-yellow-100 dark:bg-yellow-900/20 rounded-lg flex items-center justify-center">
-                    <Target className="w-6 h-6 text-yellow-600 dark:text-yellow-400" />
+                  <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center">
+                    <Target className="w-6 h-6 text-yellow-600" />
                   </div>
                 </div>
               </CardContent>
             </Card>
             
-            <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
+            <Card className="bg-white border-slate-200">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-slate-600 dark:text-slate-400">Prospects</p>
-                    <p className="text-2xl font-bold text-slate-900 dark:text-white">{stats.prospects}</p>
+                    <p className="text-sm font-medium text-slate-600">Prospects</p>
+                    <p className="text-2xl font-bold text-slate-900">{stats.prospects}</p>
                   </div>
-                  <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center">
-                    <Eye className="w-6 h-6 text-blue-600 dark:text-blue-400" />
+                  <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                    <Eye className="w-6 h-6 text-blue-600" />
                   </div>
                 </div>
               </CardContent>
             </Card>
             
-            <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
+            <Card className="bg-white border-slate-200">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-slate-600 dark:text-slate-400">Customers</p>
-                    <p className="text-2xl font-bold text-slate-900 dark:text-white">{stats.customers}</p>
+                    <p className="text-sm font-medium text-slate-600">Customers</p>
+                    <p className="text-2xl font-bold text-slate-900">{stats.customers}</p>
                   </div>
-                  <div className="w-12 h-12 bg-emerald-100 dark:bg-emerald-900/20 rounded-lg flex items-center justify-center">
-                    <CheckCircle className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
+                  <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center">
+                    <CheckCircle className="w-6 h-6 text-emerald-600" />
                   </div>
                 </div>
               </CardContent>
             </Card>
             
-            <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
+            <Card className="bg-white border-slate-200">
               <CardContent className="p-6">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-sm font-medium text-slate-600 dark:text-slate-400">High Priority</p>
-                    <p className="text-2xl font-bold text-slate-900 dark:text-white">{stats.highPriority}</p>
+                    <p className="text-sm font-medium text-slate-600">High Priority</p>
+                    <p className="text-2xl font-bold text-slate-900">{stats.highPriority}</p>
                   </div>
-                  <div className="w-12 h-12 bg-red-100 dark:bg-red-900/20 rounded-lg flex items-center justify-center">
-                    <AlertCircle className="w-6 h-6 text-red-600 dark:text-red-400" />
+                  <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                    <AlertCircle className="w-6 h-6 text-red-600" />
                   </div>
                 </div>
               </CardContent>
@@ -280,7 +280,7 @@ export default function SimplifiedCustomersPage() {
           transition={{ delay: 0.1 }}
           className="mb-6"
         >
-          <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
+          <Card className="bg-white border-slate-200">
             <CardContent className="p-6">
               <div className="flex flex-col sm:flex-row gap-4">
                 <div className="flex-1 relative">
@@ -289,14 +289,14 @@ export default function SimplifiedCustomersPage() {
                     placeholder="Search customers by name, phone, or vehicle interest..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-10 bg-slate-50 dark:bg-slate-700 border-slate-200 dark:border-slate-600"
+                    className="pl-10 bg-slate-50 border-slate-200"
                   />
                 </div>
                 <div className="flex gap-2">
                   <Button
                     variant="outline"
                     onClick={() => setIsFilterOpen(!isFilterOpen)}
-                    className="border-slate-200 dark:border-slate-600"
+                    className="border-slate-200"
                   >
                     <Filter className="h-4 w-4 mr-2" />
                     Filter
@@ -308,10 +308,10 @@ export default function SimplifiedCustomersPage() {
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
                   animate={{ height: 'auto', opacity: 1 }}
-                  className="mt-4 pt-4 border-t border-slate-200 dark:border-slate-700 space-y-4"
+                  className="mt-4 pt-4 border-t border-slate-200 space-y-4"
                 >
                   <div className="flex flex-wrap gap-2">
-                    <span className="text-sm font-medium text-slate-700 dark:text-slate-300 mr-2">Status:</span>
+                    <span className="text-sm font-medium text-slate-700 mr-2">Status:</span>
                     {['all', 'lead', 'prospect', 'customer'].map((status) => (
                       <Button
                         key={status}
@@ -326,7 +326,7 @@ export default function SimplifiedCustomersPage() {
                   </div>
                   
                   <div className="flex flex-wrap gap-2">
-                    <span className="text-sm font-medium text-slate-700 dark:text-slate-300 mr-2">Priority:</span>
+                    <span className="text-sm font-medium text-slate-700 mr-2">Priority:</span>
                     {['all', 'low', 'medium', 'high'].map((priority) => (
                       <Button
                         key={priority}
@@ -368,13 +368,13 @@ export default function SimplifiedCustomersPage() {
           transition={{ delay: 0.2 }}
         >
           {filteredAndSortedCustomers.length === 0 ? (
-            <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
+            <Card className="bg-white border-slate-200">
               <CardContent className="p-12 text-center">
                 <Users className="h-12 w-12 text-slate-400 mx-auto mb-4" />
-                <h3 className="text-lg font-medium text-slate-900 dark:text-white mb-2">
+                <h3 className="text-lg font-medium text-slate-900 mb-2">
                   {searchTerm || statusFilter !== 'all' || priorityFilter !== 'all' ? 'No customers found' : 'No customers yet'}
                 </h3>
-                <p className="text-slate-600 dark:text-slate-400 mb-6">
+                <p className="text-slate-600 mb-6">
                   {searchTerm || statusFilter !== 'all' || priorityFilter !== 'all'
                     ? 'Try adjusting your search or filter criteria'
                     : 'Add your first customer to get started'
@@ -412,13 +412,13 @@ export default function SimplifiedCustomersPage() {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.03 }}
                   >
-                    <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 hover:shadow-lg transition-all duration-200 group">
+                    <Card className="bg-white border-slate-200 hover:shadow-lg transition-all duration-200 group">
                       <CardContent className="p-6">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-4 flex-1">
                             {/* Avatar */}
-                            <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-full flex items-center justify-center">
-                              <span className="text-blue-600 dark:text-blue-400 font-semibold">
+                            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+                              <span className="text-blue-600 font-semibold">
                                 {customer.firstName.charAt(0)}{customer.lastName.charAt(0)}
                               </span>
                             </div>
@@ -426,7 +426,7 @@ export default function SimplifiedCustomersPage() {
                             {/* Customer Info */}
                             <div className="flex-1 min-w-0">
                               <div className="flex items-center gap-3 mb-2">
-                                <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
+                                <h3 className="text-lg font-semibold text-slate-900">
                                   {customer.firstName} {customer.lastName}
                                 </h3>
                                 <Badge className={`${status?.color} border`}>
@@ -441,15 +441,15 @@ export default function SimplifiedCustomersPage() {
                               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-sm">
                                 <div className="flex items-center gap-2">
                                   <Phone className="w-4 h-4 text-slate-400" />
-                                  <span className="text-slate-600 dark:text-slate-400">{customer.phoneNumber}</span>
+                                  <span className="text-slate-600">{customer.phoneNumber}</span>
                                 </div>
                                 {customer.vehicleInterest && (
                                   <div className="flex items-center gap-2">
                                     <Car className="w-4 h-4 text-slate-400" />
-                                    <span className="text-slate-600 dark:text-slate-400">{customer.vehicleInterest}</span>
+                                    <span className="text-slate-600">{customer.vehicleInterest}</span>
                                   </div>
                                 )}
-                                <div className="text-slate-500 dark:text-slate-500">
+                                <div className="text-slate-500">
                                   Added {new Date(customer.createdAt).toLocaleDateString()}
                                 </div>
                               </div>
@@ -513,7 +513,7 @@ export default function SimplifiedCustomersPage() {
             transition={{ delay: 0.3 }}
             className="mt-8 text-center"
           >
-            <p className="text-sm text-slate-600 dark:text-slate-400">
+            <p className="text-sm text-slate-600">
               Showing {filteredAndSortedCustomers.length} of {customers.length} customers
               {(searchTerm || statusFilter !== 'all' || priorityFilter !== 'all') && (
                 <Button
