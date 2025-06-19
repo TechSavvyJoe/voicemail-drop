@@ -38,6 +38,10 @@ export async function POST(request: NextRequest) {
 
     const supabase = await createClient()
 
+    if (!supabase) {
+      return NextResponse.json({ error: 'Database connection failed' }, { status: 500 })
+    }
+
     // Check if user already exists
     const { data: existingUser } = await supabase
       .from('user_profiles')

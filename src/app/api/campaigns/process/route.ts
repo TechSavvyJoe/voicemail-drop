@@ -1,12 +1,31 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { supabase, isDemoMode } from '@/lib/supabase'
+import { verifyToken } from '@/lib/auth'
+import { createClient } from '@/lib/supabase/server'
+
+async function getUserFromToken(request: NextRequest) {
+  const token = request.cookies.get('auth-token')?.value;
+  if (!token) throw new Error('No token provided');
+  
+  const decoded = verifyToken(token) as { userId: string, organizationId: string };
+  return { userId: decoded.userId, organizationId: decoded.organizationId };
+}
 
 export async function POST(request: NextRequest) {
   try {
+    const { organizationId } = await getUserFromToken(request);
     const { campaignId } = await request.json()
+    
+    if (!campaignId) {
+      return NextResponse.json(
+        { error: 'Campaign ID is required' },
+        { status: 400 }
+      );
+    }
+    
+    const supabase = await createClient();
 
     // In demo mode, return mock processing results
-    if (isDemoMode || !supabase) {
+    if (!supabase) {
       const mockResults = Array.from({ length: 5 }, (_, i) => ({
         customerId: `demo-customer-${i + 1}`,
         phoneNumber: `555-000-${String(i + 1).padStart(4, '0')}`,
@@ -30,6 +49,7 @@ export async function POST(request: NextRequest) {
       .from('campaigns')
       .select('*')
       .eq('id', campaignId)
+      .eq('organization_id', organizationId)
       .single()
 
     if (campaignError || !campaign) {
@@ -124,8 +144,8 @@ export async function POST(request: NextRequest) {
     console.error('Campaign processing error:', error)
     const errorMessage = error instanceof Error ? error.message : 'Unknown error'
     return NextResponse.json({ 
-      error: 'Failed to process campaign',
+      error: 'Unauthorized',
       details: process.env.NODE_ENV === 'development' ? errorMessage : undefined
-    }, { status: 500 })
+    }, { status: 401 })
   }
 }

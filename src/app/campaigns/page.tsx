@@ -5,12 +5,12 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { 
   Phone, Plus, Play, Check, Search,
-  Clock, Edit, Eye, Download
+  Clock, Edit, Eye, Download, Loader2
 } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { isDemoMode, demoCampaigns } from '@/lib/demo-data'
+import { useCampaigns } from '@/hooks/use-campaigns'
 import { AdvancedNavigation } from '@/components/advanced-navigation'
 
 export default function CampaignsPage() {
@@ -20,7 +20,7 @@ export default function CampaignsPage() {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc')
   const [selectedCampaigns, setSelectedCampaigns] = useState<string[]>([])
   
-  const campaigns = useMemo(() => isDemoMode ? demoCampaigns : [], [])
+  const { campaigns, isLoading, isError, error } = useCampaigns()
 
   // Enhanced filtering and sorting
   const filteredAndSortedCampaigns = useMemo(() => {
@@ -38,14 +38,14 @@ export default function CampaignsPage() {
           compareValue = a.name.localeCompare(b.name)
           break
         case 'created':
-          compareValue = new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+          compareValue = new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
           break
         case 'recipients':
-          compareValue = a.totalRecipients - b.totalRecipients
+          compareValue = a.total_recipients - b.total_recipients
           break
         case 'progress':
-          const aProgress = a.totalRecipients > 0 ? (a.sentCount / a.totalRecipients) : 0
-          const bProgress = b.totalRecipients > 0 ? (b.sentCount / b.totalRecipients) : 0
+          const aProgress = a.total_recipients > 0 ? (a.sent_count / a.total_recipients) : 0
+          const bProgress = b.total_recipients > 0 ? (b.sent_count / b.total_recipients) : 0
           compareValue = aProgress - bProgress
           break
         default:
@@ -55,6 +55,44 @@ export default function CampaignsPage() {
       return sortOrder === 'asc' ? compareValue : -compareValue
     })
   }, [campaigns, searchTerm, statusFilter, sortBy, sortOrder])
+
+  // Show loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+        <AdvancedNavigation />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
+          <div className="flex items-center justify-center min-h-[400px]">
+            <div className="flex items-center gap-3 text-slate-600 dark:text-slate-400">
+              <Loader2 className="h-6 w-6 animate-spin" />
+              <span>Loading campaigns...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  // Show error state
+  if (isError) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
+        <AdvancedNavigation />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16">
+          <div className="flex items-center justify-center min-h-[400px]">
+            <div className="text-center">
+              <div className="text-red-500 dark:text-red-400 mb-2">
+                Error loading campaigns
+              </div>
+              <div className="text-sm text-slate-600 dark:text-slate-400">
+                {error?.message || 'Something went wrong'}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
 
   const getStatusConfig = (status: string) => {
     const configs = {
@@ -340,7 +378,7 @@ export default function CampaignsPage() {
                         </div>
                         <div className="flex items-center justify-between">
                           <p className="text-sm font-medium text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
-                            🗓️ {new Date(campaign.createdAt).toLocaleDateString('en-US', { 
+                            🗓️ {new Date(campaign.created_at).toLocaleDateString('en-US', { 
                               month: 'short', 
                               day: 'numeric', 
                               year: 'numeric' 
@@ -360,7 +398,7 @@ export default function CampaignsPage() {
                           <div className="w-2 h-2 bg-slate-400 rounded-full" />
                         </div>
                         <p className="text-3xl font-black text-slate-900 mb-2 tracking-tight">
-                          {campaign.totalRecipients.toLocaleString()}
+                          {campaign.total_recipients.toLocaleString()}
                         </p>
                         <p className="text-sm font-bold text-slate-600 uppercase tracking-wider">Total Reach</p>
                       </div>
@@ -370,7 +408,7 @@ export default function CampaignsPage() {
                           <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse" />
                         </div>
                         <p className="text-3xl font-black text-blue-700 mb-2 tracking-tight">
-                          {campaign.sentCount.toLocaleString()}
+                          {campaign.sent_count.toLocaleString()}
                         </p>
                         <p className="text-sm font-bold text-blue-600 uppercase tracking-wider">Messages Sent</p>
                       </div>
@@ -382,24 +420,23 @@ export default function CampaignsPage() {
                           <div className="w-2 h-2 bg-emerald-500 rounded-full" />
                         </div>
                         <p className="text-3xl font-black text-emerald-700 mb-2 tracking-tight">
-                          {campaign.deliveredCount.toLocaleString()}
+                          {campaign.delivered_count.toLocaleString()}
                         </p>
                         <p className="text-sm font-bold text-emerald-600 uppercase tracking-wider">Delivered</p>
                       </div>
                       
                       <div className="relative p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl shadow-inner border border-purple-200/50 group-hover:from-purple-100 group-hover:to-purple-200 transition-all duration-500">
                         <div className="absolute top-3 right-3">
-                          <div className={`w-2 h-2 rounded-full ${
-                            campaign.sentCount > 0 ? 
-                              (campaign.deliveredCount / campaign.sentCount) * 100 >= 80 ? 'bg-emerald-500' :
-                              (campaign.deliveredCount / campaign.sentCount) * 100 >= 60 ? 'bg-amber-500' : 'bg-red-500'
+                          <div className={`w-2 h-2 rounded-full ${                            campaign.sent_count > 0 ?
+                              (campaign.delivered_count / campaign.sent_count) * 100 >= 80 ? 'bg-emerald-500' :
+                              (campaign.delivered_count / campaign.sent_count) * 100 >= 60 ? 'bg-amber-500' : 'bg-red-500'
                             : 'bg-slate-400'
                           }`} />
                         </div>
                         <p className={`text-3xl font-black mb-2 tracking-tight ${getPerformanceColor(
-                          campaign.sentCount > 0 ? (campaign.deliveredCount / campaign.sentCount) * 100 : 0
+                          campaign.sent_count > 0 ? (campaign.delivered_count / campaign.sent_count) * 100 : 0
                         )}`}>
-                          {campaign.sentCount > 0 ? Math.round((campaign.deliveredCount / campaign.sentCount) * 100) : 0}%
+                          {campaign.sent_count > 0 ? Math.round((campaign.delivered_count / campaign.sent_count) * 100) : 0}%
                         </p>
                         <p className="text-sm font-bold text-purple-600 uppercase tracking-wider">Success Rate</p>
                       </div>
@@ -410,7 +447,7 @@ export default function CampaignsPage() {
                       <div className="flex justify-between items-center">
                         <span className="text-lg font-bold text-slate-700">Campaign Progress</span>
                         <span className="text-2xl font-black text-slate-900 bg-slate-100 px-4 py-2 rounded-xl">
-                          {campaign.totalRecipients > 0 ? Math.round((campaign.sentCount / campaign.totalRecipients) * 100) : 0}%
+                          {campaign.total_recipients > 0 ? Math.round((campaign.sent_count / campaign.total_recipients) * 100) : 0}%
                         </span>
                       </div>
                       <div className="relative">
@@ -419,7 +456,7 @@ export default function CampaignsPage() {
                             className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-cyan-500 rounded-full relative"
                             initial={{ width: 0 }}
                             animate={{ 
-                              width: `${campaign.totalRecipients > 0 ? (campaign.sentCount / campaign.totalRecipients) * 100 : 0}%` 
+                              width: `${campaign.total_recipients > 0 ? (campaign.sent_count / campaign.total_recipients) * 100 : 0}%` 
                             }}
                             transition={{ duration: 1, ease: "easeOut" }}
                           >
@@ -428,7 +465,7 @@ export default function CampaignsPage() {
                         </div>
                       </div>
                       <p className="text-sm text-slate-500 font-medium bg-slate-50 px-3 py-2 rounded-lg text-center">
-                        📊 {campaign.sentCount.toLocaleString()} of {campaign.totalRecipients.toLocaleString()} recipients contacted
+                        📊 {campaign.sent_count.toLocaleString()} of {campaign.total_recipients.toLocaleString()} recipients contacted
                       </p>
                     </div>
                   </div>
