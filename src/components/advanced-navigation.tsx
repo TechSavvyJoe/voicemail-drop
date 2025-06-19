@@ -119,7 +119,7 @@ const mockNotifications = [
   }
 ]
 
-export function FunctionalNavigation({ className }: AdvancedNavigationProps) {
+export function AdvancedNavigation({ className }: AdvancedNavigationProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [searchQuery, setSearchQuery] = useState('')

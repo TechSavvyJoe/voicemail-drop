@@ -21,9 +21,9 @@ export default function ProfilePage() {
     firstName: demoUser.firstName,
     lastName: demoUser.lastName,
     email: demoUser.email,
-    phone: demoUser.phone || '+1 (555) 123-4567',
+    phone: '+1 (555) 123-4567',
     company: demoUser.company,
-    role: demoUser.role || 'Sales Manager',
+    role: 'Sales Manager',
     bio: 'Experienced sales professional specializing in automotive sales and customer relationship management.',
     location: 'San Francisco, CA',
     timezone: 'America/Los_Angeles'

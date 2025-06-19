@@ -90,7 +90,7 @@ export default function ImprovedDashboardPage() {
 
   if (statsLoading) {
     return (
-      <div className="min-h-screen bg-slate-50">
+      <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
         <AdvancedNavigation />
         <div className="container mx-auto px-4 py-8">
           <div className="flex items-center justify-center h-64">
@@ -105,7 +105,7 @@ export default function ImprovedDashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-slate-900">
+    <div className="min-h-screen bg-gradient-to-br from-slate-100 via-white to-blue-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
       <AdvancedNavigation />
       
       <div className="container mx-auto px-6 py-8 max-w-7xl">
@@ -179,18 +179,18 @@ export default function ImprovedDashboardPage() {
               transition={{ delay: index * 0.1 }}
             >
               <Link href={stat.href}>
-                <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 group">
+                <Card className="cursor-pointer hover:shadow-xl transition-all duration-300 hover:-translate-y-1 bg-white/90 dark:bg-slate-800/90 backdrop-blur-sm border-2 border-slate-200 dark:border-slate-700 hover:border-blue-300 dark:hover:border-blue-600 group">
                   <CardContent className="p-6">
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex-1">
-                        <p className="text-sm font-medium text-slate-600 dark:text-slate-400 mb-2">
+                        <p className="text-sm font-semibold text-slate-600 dark:text-slate-400 mb-2">
                           {stat.title}
                         </p>
                         <p className="text-3xl font-bold text-slate-900 dark:text-white">
                           {stat.value}
                         </p>
                       </div>
-                      <div className={`w-12 h-12 rounded-lg bg-${stat.color}-100 dark:bg-${stat.color}-900/20 flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                      <div className={`w-12 h-12 rounded-xl bg-${stat.color}-100 dark:bg-${stat.color}-900/30 border border-${stat.color}-200 dark:border-${stat.color}-800 flex items-center justify-center group-hover:scale-110 transition-transform`}>
                         <stat.icon className={`w-6 h-6 text-${stat.color}-600 dark:text-${stat.color}-400`} />
                       </div>
                     </div>

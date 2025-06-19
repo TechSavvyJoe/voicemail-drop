@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { 
   Shield, Lock, Key, Smartphone, Eye, EyeOff,
-  AlertTriangle, CheckCircle, Clock, Settings,
+  AlertTriangle, CheckCircle, Clock,
   Save, RefreshCw, Download, History
 } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
