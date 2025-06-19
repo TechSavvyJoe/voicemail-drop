@@ -7,13 +7,13 @@ async function getUserFromToken(request: NextRequest) {
   const token = request.cookies.get('auth-token')?.value;
   if (!token) throw new Error('No token provided');
   
-  const decoded = verifyToken(token) as { userId: string };
-  return decoded.userId;
+  const decoded = verifyToken(token) as { userId: string, organizationId: string };
+  return { userId: decoded.userId, organizationId: decoded.organizationId };
 }
 
 export async function GET(request: NextRequest) {
   try {
-    const userId = await getUserFromToken(request);
+    const { organizationId } = await getUserFromToken(request);
     const supabase = await createClient();
 
     // In demo mode, return mock customers
@@ -21,28 +21,30 @@ export async function GET(request: NextRequest) {
       const mockCustomers = [
         {
           id: 'demo-customer-1',
-          user_id: userId,
+          organization_id: organizationId,
           first_name: 'John',
           last_name: 'Smith',
           phone_number: '555-0001',
           email: 'john.smith@email.com',
           vehicle_interest: 'Sedan',
-          last_contact: '2024-06-15T10:00:00Z',
+          last_contact: '2024-06-15',
           notes: 'Interested in fuel-efficient vehicles',
-          tags: ['hot-lead', 'sedan'],
+          is_active: true,
+          opt_out: false,
           created_at: '2024-06-01T09:00:00Z'
         },
         {
           id: 'demo-customer-2',
-          user_id: userId,
+          organization_id: organizationId,
           first_name: 'Sarah',
           last_name: 'Johnson',
           phone_number: '555-0002',
           email: 'sarah.j@email.com',
           vehicle_interest: 'SUV',
-          last_contact: '2024-06-18T14:30:00Z',
+          last_contact: '2024-06-18',
           notes: 'Looking for family vehicle',
-          tags: ['family', 'suv'],
+          is_active: true,
+          opt_out: false,
           created_at: '2024-06-10T11:15:00Z'
         }
       ];
@@ -52,7 +54,7 @@ export async function GET(request: NextRequest) {
     const { data: customers, error } = await supabase
       .from('customers')
       .select('*')
-      .eq('user_id', userId)
+      .eq('organization_id', organizationId)
       .order('created_at', { ascending: false });
 
     if (error) {
@@ -79,7 +81,7 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const userId = await getUserFromToken(request);
+    const { userId, organizationId } = await getUserFromToken(request);
     const body = await request.json();
     
     const supabase = await createClient();
@@ -87,8 +89,9 @@ export async function POST(request: NextRequest) {
     // In demo mode, return mock responses
     if (!supabase) {
       if (Array.isArray(body.customers)) {
-        const mockCustomers = body.customers.map((customer: { firstName: string; lastName: string; phoneNumber: string; email?: string; vehicleInterest?: string; lastContact?: string; notes?: string; tags?: string[] }, index: number) => ({
+        const mockCustomers = body.customers.map((customer: { firstName: string; lastName: string; phoneNumber: string; email?: string; vehicleInterest?: string; lastContact?: string; notes?: string }, index: number) => ({
           id: `demo-customer-${Date.now()}-${index}`,
+          organization_id: organizationId,
           user_id: userId,
           first_name: customer.firstName,
           last_name: customer.lastName,
@@ -97,7 +100,8 @@ export async function POST(request: NextRequest) {
           vehicle_interest: customer.vehicleInterest,
           last_contact: customer.lastContact,
           notes: customer.notes,
-          tags: customer.tags || [],
+          is_active: true,
+          opt_out: false,
           created_at: new Date().toISOString()
         }));
         
@@ -108,6 +112,7 @@ export async function POST(request: NextRequest) {
       } else {
         const mockCustomer = {
           id: `demo-customer-${Date.now()}`,
+          organization_id: organizationId,
           user_id: userId,
           first_name: body.firstName,
           last_name: body.lastName,
@@ -116,7 +121,8 @@ export async function POST(request: NextRequest) {
           vehicle_interest: body.vehicleInterest,
           last_contact: body.lastContact,
           notes: body.notes,
-          tags: body.tags || [],
+          is_active: true,
+          opt_out: false,
           created_at: new Date().toISOString()
         };
         
@@ -136,7 +142,8 @@ export async function POST(request: NextRequest) {
         try {
           const validatedCustomer = CustomerSchema.parse(body.customers[i]);
           validatedCustomers.push({
-            user_id: userId,
+            organization_id: organizationId,
+            customer_list_id: null, // Will be set if uploading to specific list
             first_name: validatedCustomer.firstName,
             last_name: validatedCustomer.lastName,
             phone_number: validatedCustomer.phoneNumber,
@@ -144,7 +151,8 @@ export async function POST(request: NextRequest) {
             vehicle_interest: validatedCustomer.vehicleInterest,
             last_contact: validatedCustomer.lastContact,
             notes: validatedCustomer.notes,
-            tags: validatedCustomer.tags || [],
+            is_active: true,
+            opt_out: false
           });
         } catch (error) {
           errors.push({
@@ -191,7 +199,8 @@ export async function POST(request: NextRequest) {
       .from('customers')
       .insert([
         {
-          user_id: userId,
+          organization_id: organizationId,
+          customer_list_id: null,
           first_name: validatedCustomer.firstName,
           last_name: validatedCustomer.lastName,
           phone_number: validatedCustomer.phoneNumber,
@@ -199,7 +208,8 @@ export async function POST(request: NextRequest) {
           vehicle_interest: validatedCustomer.vehicleInterest,
           last_contact: validatedCustomer.lastContact,
           notes: validatedCustomer.notes,
-          tags: validatedCustomer.tags || [],
+          is_active: true,
+          opt_out: false
         },
       ])
       .select()
