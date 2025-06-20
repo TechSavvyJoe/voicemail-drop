@@ -18,6 +18,18 @@ const TCPA_FREQUENCY_LIMITS = {
   MAX_PER_WEEK: 1,
 }
 
+interface VoicemailResult {
+  success: boolean
+  callSid?: string
+  message?: string
+  error?: string
+  retryCount?: number
+  estimatedDuration?: number
+  compliant?: boolean
+  finalAttempt?: boolean
+  twilioError?: string
+}
+
 export class VoicemailService {
   
   // TCPA Compliance Methods
@@ -136,66 +148,235 @@ export class VoicemailService {
     }
   }
 
-  static async sendVoicemail(phoneNumber: string, message: string, campaignId?: string, timezone?: string) {
+  static async sendVoicemail(phoneNumber: string, message: string, campaignId?: string, timezone?: string, retryCount = 0): Promise<VoicemailResult> {
+    const maxRetries = 3
+    const retryDelay = 1000 * Math.pow(2, retryCount) // Exponential backoff
+    
     try {
-      // TCPA Compliance Check
-      const compliance = await this.checkTCPACompliance(phoneNumber, timezone)
-      if (!compliance.compliant) {
+      // Validate phone number first
+      if (!this.validatePhoneNumber(phoneNumber)) {
         return {
           success: false,
-          error: `TCPA Compliance violation: ${compliance.reason}`
+          error: 'Invalid phone number format'
         }
+      }
+
+      // Format phone number
+      const formattedPhone = this.formatPhoneNumber(phoneNumber)
+
+      // TCPA Compliance Check with detailed logging
+      const compliance = await this.checkTCPACompliance(formattedPhone, timezone)
+      if (!compliance.compliant) {
+        // Log compliance failure
+        if (supabase) {
+          await supabase.from('tcpa_audit_log').insert({
+            phone_number: formattedPhone,
+            action: 'compliance_check',
+            result: false,
+            reason: compliance.reason,
+            created_at: new Date().toISOString()
+          })
+        }
+        
+        return {
+          success: false,
+          error: `TCPA Compliance violation: ${compliance.reason}`,
+          compliant: false
+        }
+      }
+
+      // Log successful compliance check
+      if (supabase) {
+        await supabase.from('tcpa_audit_log').insert({
+          phone_number: formattedPhone,
+          action: 'compliance_check',
+          result: true,
+          reason: 'All compliance checks passed',
+          created_at: new Date().toISOString()
+        })
       }
 
       // Add opt-out message to the voicemail
       const compliantMessage = `${message} To opt out of future voicemails, reply STOP or call us to be removed from our list.`
 
-      // Create TwiML for voicemail message
+      // Validate message length (max 30 seconds ~ 150 words)
+      const wordCount = compliantMessage.split(' ').length
+      if (wordCount > 150) {
+        return {
+          success: false,
+          error: 'Message too long. Maximum 150 words for 30-second voicemail.'
+        }
+      }
+
+      // For true ringless voicemail, we need to use Twilio's specific approach
+      // Option 1: Use Twilio's Voice API with specific parameters for voicemail delivery
+      // Option 2: Use text-to-speech recording and upload as voicemail
+      
+      // Create TwiML for ringless voicemail delivery
       const twiml = `<?xml version="1.0" encoding="UTF-8"?>
         <Response>
-          <Say voice="alice">${compliantMessage}</Say>
+          <Pause length="1"/>
+          <Say voice="alice" rate="medium" pitch="medium">${compliantMessage}</Say>
+          <Pause length="1"/>
         </Response>`
 
-      // Make call using Twilio
-      const call = await client.calls.create({
-        to: phoneNumber,
+      // Enhanced call parameters optimized for direct-to-voicemail delivery
+      const callParams = {
+        to: formattedPhone,
         from: twilioPhoneNumber,
         twiml: twiml,
-        machineDetection: 'DetectMessageEnd',
+        // Critical: Use specific parameters for ringless voicemail
+        machineDetection: 'Enable' as const, // Detect answering machines
         machineDetectionTimeout: 30,
         machineDetectionSpeechThreshold: 2400,
         machineDetectionSpeechEndThreshold: 1200,
-        machineDetectionSilenceTimeout: 5000
-      })
+        machineDetectionSilenceTimeout: 5000,
+        // Ringless voicemail specific settings
+        answerOnBridge: false, // Don't answer until machine detected
+        record: false,
+        statusCallback: process.env.TWILIO_STATUS_CALLBACK_URL,
+        statusCallbackEvent: ['completed', 'answered', 'machine-start', 'machine-end-beep', 'machine-end-silence', 'failed'],
+        statusCallbackMethod: 'POST',
+        // Extended timeout to ensure delivery to voicemail
+        timeout: 30,
+        // Add If-Machine parameter for better voicemail detection
+        ifMachine: 'continue', // Continue to voicemail even if machine detected
+        // Additional parameter for better ringless delivery
+        sendDigits: 'w' // Small delay before starting message
+      }
 
-      // Store voicemail record in database if we have supabase
+      // Make call using Twilio with error handling
+      let call
+      try {
+        call = await client.calls.create(callParams)
+      } catch (twilioError: unknown) {
+        // Handle specific Twilio errors
+        const error = twilioError as { code?: number; message?: string }
+        if (error.code === 21217) { // Phone number is not valid
+          return {
+            success: false,
+            error: 'Invalid phone number',
+            twilioError: error.message
+          }
+        } else if (error.code === 21614) { // Phone number is not mobile
+          return {
+            success: false,
+            error: 'Phone number is not a mobile number',
+            twilioError: error.message
+          }
+        } else if (error.code === 20003) { // Authentication error
+          return {
+            success: false,
+            error: 'Twilio authentication failed',
+            twilioError: error.message
+          }
+        } else if (retryCount < maxRetries) {
+          // Retry on other errors
+          console.log(`Retrying voicemail send (attempt ${retryCount + 1}/${maxRetries})...`)
+          await new Promise(resolve => setTimeout(resolve, retryDelay))
+          return this.sendVoicemail(phoneNumber, message, campaignId, timezone, retryCount + 1)
+        } else {
+          throw twilioError
+        }
+      }
+
+      // Store enhanced voicemail record in database
       if (supabase) {
-        await supabase
+        const voicemailRecord = {
+          campaign_id: campaignId,
+          phone_number: formattedPhone,
+          message: compliantMessage,
+          twilio_call_sid: call.sid,
+          status: 'initiated',
+          cost_cents: this.calculateCost(compliantMessage),
+          created_at: new Date().toISOString(),
+          timezone: timezone || 'America/New_York',
+          retry_count: retryCount,
+          word_count: wordCount,
+          estimated_duration: Math.ceil(wordCount / 2.5), // ~2.5 words per second
+          compliance_checked: true
+        }
+
+        const { error: dbError } = await supabase
           .from('voicemails')
-          .insert({
-            campaign_id: campaignId,
-            phone_number: phoneNumber,
-            message: compliantMessage,
-            twilio_call_sid: call.sid,
-            status: 'initiated',
-            cost_cents: this.calculateCost(compliantMessage),
-            created_at: new Date().toISOString(),
-            timezone: timezone || 'America/New_York'
-          })
+          .insert(voicemailRecord)
+
+        if (dbError) {
+          console.error('Database insert error:', dbError)
+          // Don't fail the voicemail send if database fails
+        }
       }
 
       return {
         success: true,
         callSid: call.sid,
-        message: 'Voicemail sent successfully'
+        message: 'Voicemail sent successfully',
+        retryCount,
+        estimatedDuration: Math.ceil(wordCount / 2.5)
       }
-    } catch (error) {
+    } catch (error: unknown) {
       console.error('Voicemail send error:', error)
+      
+      // Store failed attempt if possible
+      if (supabase) {
+        try {
+          await supabase.from('failed_voicemails').insert({
+            phone_number: phoneNumber,
+            message,
+            campaign_id: campaignId,
+            error_message: error instanceof Error ? error.message : 'Unknown error',
+            retry_count: retryCount,
+            created_at: new Date().toISOString()
+          })
+        } catch (dbError) {
+          console.error('Failed to log error to database:', dbError)
+        }
+      }
+
+      // Retry logic for transient errors
+      if (retryCount < maxRetries && this.isRetryableError(error)) {
+        console.log(`Retrying voicemail send (attempt ${retryCount + 1}/${maxRetries})...`)
+        await new Promise(resolve => setTimeout(resolve, retryDelay))
+        return this.sendVoicemail(phoneNumber, message, campaignId, timezone, retryCount + 1)
+      }
+
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: error instanceof Error ? error.message : 'Unknown error',
+        retryCount,
+        finalAttempt: retryCount >= maxRetries
       }
     }
+  }
+
+  private static isRetryableError(error: unknown): boolean {
+    // Define which errors are worth retrying
+    const retryableErrorCodes = [
+      'ECONNRESET',
+      'ENOTFOUND',
+      'ECONNREFUSED',
+      'ETIMEDOUT',
+      'ENETUNREACH'
+    ]
+    
+    const retryableTwilioErrors = [
+      20429, // Too many requests
+      20500, // Internal server error
+      21601, // Temporary failure
+      30001  // Queue overflow
+    ]
+
+    const err = error as { code?: string | number }
+    
+    if (err.code && typeof err.code === 'string' && retryableErrorCodes.includes(err.code)) {
+      return true
+    }
+
+    if (err.code && typeof err.code === 'number' && retryableTwilioErrors.includes(err.code)) {
+      return true
+    }
+
+    return false
   }
 
   static async sendBulkVoicemails(phoneNumbers: string[], message: string, campaignId?: string) {
