@@ -47,9 +47,8 @@ export default function CustomerUpload() {
             parsedData.push(row);
           }
         }
-      } else if (file.name.endsWith('.xlsx') || file.name.endsWith('.xls')) {
-        // For Excel files, you would use a library like xlsx
-        setErrorMessage('Excel files are not yet supported. Please use CSV format.');
+      } else {
+        setErrorMessage('Unsupported file format. Please use CSV format.');
         setUploadStatus('error');
         return;
       }
@@ -112,9 +111,7 @@ export default function CustomerUpload() {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: {
-      'text/csv': ['.csv'],
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
-      'application/vnd.ms-excel': ['.xls']
+      'text/csv': ['.csv']
     },
     multiple: false
   });

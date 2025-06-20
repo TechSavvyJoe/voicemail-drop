@@ -76,6 +76,12 @@ const navigationItems = [
     badge: null,
   },
   {
+    name: 'TCPA Compliance',
+    href: '/tcpa',
+    icon: Shield,
+    badge: null,
+  },
+  {
     name: 'Billing',
     href: '/billing',
     icon: CreditCard,

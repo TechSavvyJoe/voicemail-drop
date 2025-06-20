@@ -190,8 +190,8 @@ export default function ImprovedDashboardPage() {
                           {stat.value}
                         </p>
                       </div>
-                      <div className={`w-12 h-12 rounded-xl bg-${stat.color}-100 dark:bg-${stat.color}-900/30 border border-${stat.color}-200 dark:border-${stat.color}-800 flex items-center justify-center group-hover:scale-110 transition-transform`}>
-                        <stat.icon className={`w-6 h-6 text-${stat.color}-600 dark:text-${stat.color}-400`} />
+                      <div className={`w-12 h-12 rounded-xl bg-${stat.color}-100 border border-${stat.color}-200 flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                        <stat.icon className={`w-6 h-6 text-${stat.color}-600`} />
                       </div>
                     </div>
                     
@@ -464,8 +464,8 @@ export default function ImprovedDashboardPage() {
                       whileTap={{ scale: 0.98 }}
                       className="p-6 rounded-lg bg-slate-50 border border-slate-200 hover:bg-slate-100 transition-all duration-200 cursor-pointer group text-center"
                     >
-                      <div className={`w-16 h-16 rounded-xl bg-${action.color}-100 dark:bg-${action.color}-900/20 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
-                        <action.icon className={`w-8 h-8 text-${action.color}-600 dark:text-${action.color}-400`} />
+                      <div className={`w-16 h-16 rounded-xl bg-${action.color}-100 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform`}>
+                        <action.icon className={`w-8 h-8 text-${action.color}-600`} />
                       </div>
                       <h3 className="font-semibold text-slate-900 mb-2">
                         {action.title}

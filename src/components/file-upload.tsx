@@ -25,7 +25,7 @@ interface UploadedFile {
 }
 
 export function FileUpload({ 
-  accept = '.csv,.xlsx,.xls', 
+  accept = '.csv', 
   maxSize = 5 * 1024 * 1024, // 5MB
   multiple = false,
   onFilesSelected,

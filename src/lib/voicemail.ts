@@ -7,13 +7,153 @@ const twilioPhoneNumber = process.env.TWILIO_PHONE_NUMBER!
 
 const client = twilio(accountSid, authToken)
 
+// TCPA Compliance Constants
+const TCPA_TIME_RESTRICTIONS = {
+  START_HOUR: 8, // 8 AM
+  END_HOUR: 21,  // 9 PM
+}
+
+const TCPA_FREQUENCY_LIMITS = {
+  MAX_PER_MONTH: 3,
+  MAX_PER_WEEK: 1,
+}
+
 export class VoicemailService {
-  static async sendVoicemail(phoneNumber: string, message: string, campaignId?: string) {
+  
+  // TCPA Compliance Methods
+  static async checkTCPACompliance(phoneNumber: string, timezone?: string): Promise<{ compliant: boolean; reason?: string }> {
     try {
+      // Check if phone number is on Do Not Call list
+      const isOnDNC = await this.checkDoNotCallList(phoneNumber)
+      if (isOnDNC) {
+        return { compliant: false, reason: 'Phone number is on Do Not Call list' }
+      }
+
+      // Check time restrictions
+      const timeCompliant = this.checkTimeRestrictions(timezone)
+      if (!timeCompliant) {
+        return { compliant: false, reason: 'Outside allowed calling hours (8 AM - 9 PM local time)' }
+      }
+
+      // Check frequency limits
+      const frequencyCompliant = await this.checkFrequencyLimits(phoneNumber)
+      if (!frequencyCompliant) {
+        return { compliant: false, reason: 'Frequency limit exceeded for this phone number' }
+      }
+
+      return { compliant: true }
+    } catch (error) {
+      console.error('TCPA compliance check error:', error)
+      return { compliant: false, reason: 'Error checking compliance' }
+    }
+  }
+
+  static async checkDoNotCallList(phoneNumber: string): Promise<boolean> {
+    try {
+      if (!supabase) return false
+
+      const { data, error } = await supabase
+        .from('do_not_call_list')
+        .select('phone_number')
+        .eq('phone_number', phoneNumber)
+        .single()
+
+      if (error && error.code !== 'PGRST116') {
+        console.error('DNC check error:', error)
+        return false
+      }
+
+      return !!data
+    } catch (error) {
+      console.error('DNC list check error:', error)
+      return false
+    }
+  }
+
+  static checkTimeRestrictions(timezone = 'America/New_York'): boolean {
+    try {
+      const now = new Date()
+      const localTime = new Intl.DateTimeFormat('en-US', {
+        timeZone: timezone,
+        hour: 'numeric',
+        hour12: false
+      }).format(now)
+      
+      const currentHour = parseInt(localTime)
+      return currentHour >= TCPA_TIME_RESTRICTIONS.START_HOUR && currentHour < TCPA_TIME_RESTRICTIONS.END_HOUR
+    } catch (error) {
+      console.error('Time restriction check error:', error)
+      return false
+    }
+  }
+
+  static async checkFrequencyLimits(phoneNumber: string): Promise<boolean> {
+    try {
+      if (!supabase) return true
+
+      const oneMonthAgo = new Date()
+      oneMonthAgo.setMonth(oneMonthAgo.getMonth() - 1)
+
+      const { data, error } = await supabase
+        .from('voicemails')
+        .select('created_at')
+        .eq('phone_number', phoneNumber)
+        .gte('created_at', oneMonthAgo.toISOString())
+
+      if (error) {
+        console.error('Frequency check error:', error)
+        return true // Allow on error to avoid blocking legitimate calls
+      }
+
+      return (data?.length || 0) < TCPA_FREQUENCY_LIMITS.MAX_PER_MONTH
+    } catch (error) {
+      console.error('Frequency limit check error:', error)
+      return true
+    }
+  }
+
+  static async addToDoNotCallList(phoneNumber: string, reason = 'User requested opt-out'): Promise<boolean> {
+    try {
+      if (!supabase) return false
+
+      const { error } = await supabase
+        .from('do_not_call_list')
+        .insert({
+          phone_number: phoneNumber,
+          added_at: new Date().toISOString(),
+          reason
+        })
+
+      if (error) {
+        console.error('Add to DNC error:', error)
+        return false
+      }
+
+      return true
+    } catch (error) {
+      console.error('Add to DNC list error:', error)
+      return false
+    }
+  }
+
+  static async sendVoicemail(phoneNumber: string, message: string, campaignId?: string, timezone?: string) {
+    try {
+      // TCPA Compliance Check
+      const compliance = await this.checkTCPACompliance(phoneNumber, timezone)
+      if (!compliance.compliant) {
+        return {
+          success: false,
+          error: `TCPA Compliance violation: ${compliance.reason}`
+        }
+      }
+
+      // Add opt-out message to the voicemail
+      const compliantMessage = `${message} To opt out of future voicemails, reply STOP or call us to be removed from our list.`
+
       // Create TwiML for voicemail message
       const twiml = `<?xml version="1.0" encoding="UTF-8"?>
         <Response>
-          <Say voice="alice">${message}</Say>
+          <Say voice="alice">${compliantMessage}</Say>
         </Response>`
 
       // Make call using Twilio
@@ -35,11 +175,12 @@ export class VoicemailService {
           .insert({
             campaign_id: campaignId,
             phone_number: phoneNumber,
-            message,
+            message: compliantMessage,
             twilio_call_sid: call.sid,
             status: 'initiated',
-            cost_cents: this.calculateCost(message),
-            created_at: new Date().toISOString()
+            cost_cents: this.calculateCost(compliantMessage),
+            created_at: new Date().toISOString(),
+            timezone: timezone || 'America/New_York'
           })
       }
 

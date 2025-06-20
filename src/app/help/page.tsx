@@ -29,7 +29,7 @@ const faqData: FAQItem[] = [
   },
   {
     question: "What file formats can I upload for customer lists?",
-    answer: "We support CSV and Excel (.xlsx) files. Your file should include columns for phone numbers, names, and any other customer data you want to use for personalization.",
+    answer: "We support CSV files. Your file should include columns for phone numbers, names, and any other customer data you want to use for personalization.",
     category: "Customer Management"
   },
   {
