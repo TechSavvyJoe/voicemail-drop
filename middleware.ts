@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
+// Skip middleware if in static export mode to avoid conflicts
+const isExportMode = process.env.EXPORT_MODE === 'true'
+
 // Security headers for production
 const securityHeaders = [
   {
@@ -67,6 +70,11 @@ function rateLimit(identifier: string, limit = 60, window = 60000) {
 }
 
 export function middleware(request: NextRequest) {
+  // Skip middleware processing if in export mode
+  if (isExportMode) {
+    return NextResponse.next()
+  }
+
   const response = NextResponse.next()
 
   // Add security headers
@@ -134,7 +142,7 @@ export function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
+  matcher: isExportMode ? [] : [
     /*
      * Match all request paths except for the ones starting with:
      * - _next/static (static files)

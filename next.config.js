@@ -1,13 +1,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Enable static exports for GitHub Pages
-  output: 'export',
-  trailingSlash: true,
-  skipTrailingSlashRedirect: true,
+  // Enable static exports for GitHub Pages only when building for production
+  ...(process.env.EXPORT_MODE === 'true' && {
+    output: 'export',
+    trailingSlash: true,
+    skipTrailingSlashRedirect: true,
+  }),
   
   // Configure for GitHub Pages deployment
-  basePath: process.env.NODE_ENV === 'production' ? '/voicemail-drop' : '',
-  assetPrefix: process.env.NODE_ENV === 'production' ? '/voicemail-drop/' : '',
+  basePath: process.env.NODE_ENV === 'production' && process.env.EXPORT_MODE === 'true' ? '/voicemail-drop' : '',
+  assetPrefix: process.env.NODE_ENV === 'production' && process.env.EXPORT_MODE === 'true' ? '/voicemail-drop/' : '',
   
   // Optimize images for static export
   images: {

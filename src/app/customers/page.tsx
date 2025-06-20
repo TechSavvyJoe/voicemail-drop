@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { 
-  Users, Upload, Search, Filter, Download, 
+  Users, Upload, Search, Download, 
   Edit, Eye, Trash2, Plus, CheckCircle, Phone,
   MoreHorizontal, ChevronDown, ChevronUp
 } from 'lucide-react'
@@ -283,10 +283,31 @@ export default function CustomersPage() {
                 </div>
                 
                 <div className="flex gap-2">
-                  <Button variant="outline" size="sm" className="border border-slate-300">
-                    <Filter className="w-4 h-4 mr-2" />
-                    Filter
-                  </Button>
+                  <select
+                    value={statusFilter}
+                    onChange={(e) => setStatusFilter(e.target.value)}
+                    className="h-10 px-3 border border-slate-300 rounded-md bg-white/80 text-sm"
+                    aria-label="Filter by status"
+                  >
+                    <option value="all">All Status</option>
+                    <option value="lead">Lead</option>
+                    <option value="prospect">Prospect</option>
+                    <option value="customer">Customer</option>
+                    <option value="inactive">Inactive</option>
+                  </select>
+                  
+                  <select
+                    value={priorityFilter}
+                    onChange={(e) => setPriorityFilter(e.target.value)}
+                    className="h-10 px-3 border border-slate-300 rounded-md bg-white/80 text-sm"
+                    aria-label="Filter by priority"
+                  >
+                    <option value="all">All Priority</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                    <option value="hot">Hot</option>
+                  </select>
                   
                   <Button variant="outline" size="sm" className="border border-slate-300">
                     <Download className="w-4 h-4 mr-2" />
